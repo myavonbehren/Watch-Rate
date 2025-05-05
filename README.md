@@ -39,4 +39,7 @@ Choose a project that fulfills the following requirements:
 	• Crime alert by location/user
 	• Book Review site
 	• Resale of used items (aka Craigslist )
+
+ ## Free Public API List
+  - https://github.com/public-api-lists/public-api-lists
  
