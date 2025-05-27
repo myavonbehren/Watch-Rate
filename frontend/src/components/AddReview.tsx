@@ -1,6 +1,4 @@
-import Button from 'react-bootstrap/Button';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import Form from 'react-bootstrap/Form';
+import { Form, Button, Card, FormGroup, FormControl } from 'react-bootstrap';
 import  { type Review } from '../types/Review';
 import React from 'react';
 import { useState } from 'react';
@@ -17,13 +15,9 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (!title || !content) {
-            alert('Title and Review are required!');
-            return;
-        }
-
+    
         const newReview: Review = {
-            username: 'currentUser', // Replace with actual user data
+            username: 'currentUser',
             title,
             content,
             rating: parseInt(rating, 10),
@@ -40,31 +34,38 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
     };
 
     return (
-    <Form>
-    <Form.Group className="mb-3">
-        <Form.Label>Title</Form.Label>
-        <Form.Control
-            type="text"
-            placeholder="Enter title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-        />
-        <Form.Text className="text-muted"> Date</Form.Text>
-        <FloatingLabel controlId="floatingTextarea2" label="">
-        <Form.Control
-            as="textarea"
-            placeholder="Add a review..."
-            style={{ height: '100px' }}
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            />
-        </FloatingLabel>
-    </Form.Group>
-    <Button variant="primary" type="submit">
-        Save
-    </Button>
-    </Form>
-
+    <Card>
+        <Card.Body>
+        <Card.Title>Add a Review</Card.Title>
+        <Form onSubmit={handleSubmit}>
+            <FormGroup className="mb-3" controlId='formTitle'>
+                <Form.Label>Show</Form.Label>
+                <Form.Control 
+                    as='input'
+                    type='text'
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    required
+                    isInvalid={!title}
+                    placeholder='Enter show title'/>
+            </FormGroup>
+            <FormGroup className="mb-3" controlId='formContent'>
+                <Form.Label>Review</Form.Label>
+                <Form.Control 
+                    as='textarea' 
+                    rows={3} 
+                    placeholder='Enter your review' 
+                    required
+                    isInvalid={!content}
+                    value={content} 
+                    onChange={(e) => setContent(e.target.value)}/>
+            </FormGroup>
+            <Button variant='primary' type='submit'>
+                Save
+            </Button>
+        </Form>
+        </Card.Body>
+    </Card>
     );
 };
 
