@@ -7,5 +7,4 @@ export interface Review {
   liked: boolean;
   createdAt: string;
   updatedAt: string;
-  dueDate: string;
 }
