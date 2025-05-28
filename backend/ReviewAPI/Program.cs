@@ -46,5 +46,47 @@ var reviews = new List<Review>
     new Review {Id = 3, Username = "Claire", Title = "Spongebob", Content = "Great animation!", Liked = false, Rating = 2, CreatedAt = date, UpdatedAt = date},
 };
 
+app.MapGet("/api/reviews", () => reviews)
+    .WithName("GetAllReviews");
+
+// GET - Get a specific review by ID
+app.MapGet("/api/reviews/{id}", (int id) =>
+{
+    var review = reviews.Find(b => b.Id == id);
+    return review == null ? Results.NotFound() : Results.Ok(review);
+})
+.WithName("GetReviewById");
+
+// POST - Add a new review
+app.MapPost("/api/reviews", (Review review) =>
+{
+    review.Id = reviews.Count > 0 ? reviews.Max(b => b.Id) + 1 : 1;
+    reviews.Add(review);
+    return Results.Created($"/api/reviews/{review.Id}", review);
+})
+.WithName("AddReview");
+
+// PUT - Update a review
+app.MapPut("/api/reviews/{id}", (int id, Review updatedreview) =>
+{
+    var index = reviews.FindIndex(b => b.Id == id);
+    if (index == -1) return Results.NotFound();
+    
+    updatedreview.Id = id;
+    reviews[index] = updatedreview;
+    return Results.NoContent();
+})
+.WithName("UpdateReview");
+
+// DELETE - Delete a review
+app.MapDelete("/api/reviews/{id}", (int id) =>
+{
+    var index = reviews.FindIndex(b => b.Id == id);
+    if (index == -1) return Results.NotFound();
+    
+    reviews.RemoveAt(index);
+    return Results.NoContent();
+})
+.WithName("DeleteReview");
 
 app.Run();
