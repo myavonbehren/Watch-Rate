@@ -1,5 +1,6 @@
-import { Form, Button, Card, FormGroup, FormControl, Container, Row, Col, CardSubtitle, CardFooter, CardTitle } from 'react-bootstrap';
+import { Form, Button, Card, FormGroup, CardTitle } from 'react-bootstrap';
 import  { type Review } from '../types/Review';
+import StarRating from './StarRating';
 import React from 'react';
 import { useState } from 'react';
 
@@ -10,7 +11,7 @@ interface AddReviewProps {
 const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
     const [title, setTitle] = React.useState('');
     const [content, setContent] = useState("");
-    const [rating, setRating] = useState("");
+    const [rating, setRating] = useState<number>(0);
     const [liked, setLiked] = useState("");
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -20,7 +21,7 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
             username: 'currentUser',
             title,
             content,
-            rating: parseInt(rating, 10),
+            rating,
             liked: liked === 'false',
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
@@ -29,8 +30,9 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
         addReview(newReview);
         setTitle('');
         setContent('');
-        setRating('');
+        setRating(0);
         setLiked('');
+        
     };
 
     return (
@@ -66,7 +68,10 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
 
             <FormGroup>
                 <Form.Label>Rating</Form.Label>
-                
+                <StarRating rating={rating}
+                onRatingChange={setRating}>
+
+                </StarRating>
                 <Form.Label>Like</Form.Label>
             </FormGroup>
 
