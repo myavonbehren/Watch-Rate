@@ -1,4 +1,4 @@
-import { Form, Button, Card, FormGroup, FormControl, Container, Row, Col } from 'react-bootstrap';
+import { Form, Button, Card, FormGroup, FormControl, Container, Row, Col, CardSubtitle, CardFooter, CardTitle } from 'react-bootstrap';
 import  { type Review } from '../types/Review';
 import React from 'react';
 import { useState } from 'react';
@@ -35,10 +35,11 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
 
     return (
         
-    <Card className="mx-auto mt-4 shadow-sm">
+     <Card className="p-0 shadow-sm border" style={{  width: '40rem'  }}>
+        
         <Card.Body>
-            <Card.Title className="mb-4" style={{fontSize: "1.5rem", fontWeight: "bold"}}>Add a Review</Card.Title>
-
+            <CardTitle style={{fontWeight: "bold", fontSize: "1.4em"}}>Write a Review</CardTitle>
+            
         <Form onSubmit={handleSubmit} className="text-start">
             <Form.Group className="mb-4" controlId="formTitle">
                 <Form.Label>Title</Form.Label>
@@ -66,9 +67,9 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
             <Button variant='primary' type='submit'>
                 Save
             </Button>
-
         </Form>
         </Card.Body>
+        <Card.Footer className="text-muted p-0 px-4 py-2">Date</Card.Footer>
     </Card>
     );
 };
