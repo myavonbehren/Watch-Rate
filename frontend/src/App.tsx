@@ -2,6 +2,8 @@ import { useState } from 'react'
 import './App.css'
 import AddReview from './components/AddReview.tsx'
 import { type Review } from './types/Review.tsx'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   const [reviews, setReviews] = useState<Review[]>();
