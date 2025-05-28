@@ -1,10 +1,9 @@
-import { Form, Button, Card, FormGroup, CardTitle } from 'react-bootstrap';
+import { Form, Button, Card, FormGroup, CardTitle, Row, Col} from 'react-bootstrap';
 import  { type Review } from '../types/Review';
 import StarRating from './StarRating';
 import React from 'react';
 import { useState } from 'react';
-import { Heart, HeartFill } from "react-bootstrap-icons";
-
+import LikeButton from './LikeButton';
 
 interface AddReviewProps {
     addReview: (review: Review) => void;
@@ -14,7 +13,11 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
     const [title, setTitle] = React.useState('');
     const [content, setContent] = useState("");
     const [rating, setRating] = useState<number>(0);
-    const [liked, setLiked] = useState("");
+    const [liked, setLiked] = useState<boolean>(false);
+
+    const handleLikeToggle = () => {
+        setLiked(!liked);
+    }
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -24,7 +27,7 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
             title,
             content,
             rating,
-            liked: liked === 'false',
+            liked,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
         };
@@ -33,7 +36,7 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
         setTitle('');
         setContent('');
         setRating(0);
-        setLiked('');
+        setLiked(false);
         
     };
 
@@ -42,7 +45,7 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
      <Card className="p-0 shadow-sm border" style={{  width: '40rem'  }}>
         
         <Card.Body>
-            <CardTitle style={{fontWeight: "bold", fontSize: "1.4em"}}>Write a Review</CardTitle>
+            <CardTitle className="mt-4" style={{fontWeight: "bold", fontSize: "1.4em"}}>Write a Review</CardTitle>
             
         <Form onSubmit={handleSubmit} className="text-start">
             <Form.Group className="mb-4" controlId="formTitle">
@@ -56,7 +59,7 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
                     required/>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formContent">
+            <Form.Group className="mb-4" controlId="formContent">
                 <Form.Label>Review</Form.Label>
                 <Form.Control
                 as="textarea"
@@ -67,17 +70,25 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
                 isInvalid={!content}
                 required/>
             </Form.Group>
-
-            <FormGroup>
-                <Form.Label>Rating</Form.Label>
+            
+            <FormGroup className='mb-4'>
+                <Row>
+                    <Col>
+                    <Form.Label>Rating</Form.Label>
                 <StarRating rating={rating}
                 onRatingChange={setRating}>
                 </StarRating>
-                <Form.Label>Like</Form.Label>
+                    </Col>
+                    <Col>
+                    <Form.Label>Like</Form.Label>
+                <LikeButton isLiked={liked}
+                onToggle={handleLikeToggle}>
+                </LikeButton>
+                    </Col>
+                </Row>
+            </FormGroup>             
 
-            </FormGroup>
-
-            <Button variant='primary' type='submit'>
+            <Button className="mb-3 " variant='primary' type='submit'>
                 Save
             </Button>
         </Form>
