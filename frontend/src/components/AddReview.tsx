@@ -3,6 +3,8 @@ import  { type Review } from '../types/Review';
 import StarRating from './StarRating';
 import React from 'react';
 import { useState } from 'react';
+import { Heart, HeartFill } from "react-bootstrap-icons";
+
 
 interface AddReviewProps {
     addReview: (review: Review) => void;
@@ -70,9 +72,9 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
                 <Form.Label>Rating</Form.Label>
                 <StarRating rating={rating}
                 onRatingChange={setRating}>
-
                 </StarRating>
                 <Form.Label>Like</Form.Label>
+
             </FormGroup>
 
             <Button variant='primary' type='submit'>
@@ -80,7 +82,7 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
             </Button>
         </Form>
         </Card.Body>
-        <Card.Footer className="text-muted p-0 px-4 py-2">Date</Card.Footer>
+        <Card.Footer className="text-muted p-0 px-4 py-2">{new Date().toISOString()}</Card.Footer>
     </Card>
     );
 };

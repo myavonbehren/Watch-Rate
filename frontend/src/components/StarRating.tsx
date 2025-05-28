@@ -16,13 +16,11 @@ const StarRating: React.FC<StarRatingProps> = ({rating, maxStars = 5, onRatingCh
           <span 
             key={index}
             style={{ cursor: onRatingChange ? 'pointer' : 'default' }}
-            onClick={() => onRatingChange && onRatingChange(starValue)}
-          >
-            {starValue <= rating ? (
-              <StarFill className="text-warning me-1" size={20} />
-            ) : (
-              <Star className="text-muted me-1" size={20} />
-            )}
+            onClick={() => onRatingChange && onRatingChange(starValue)}>
+            {starValue <= rating ? 
+            ( <StarFill className="text-warning me-1" size={25} />) 
+            : 
+            (<Star className="text-muted me-1" size={25} />)}
           </span>
         );
       })}
