@@ -64,6 +64,12 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
                 required/>
             </Form.Group>
 
+            <FormGroup>
+                <Form.Label>Rating</Form.Label>
+                
+                <Form.Label>Like</Form.Label>
+            </FormGroup>
+
             <Button variant='primary' type='submit'>
                 Save
             </Button>
