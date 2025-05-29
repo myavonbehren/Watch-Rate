@@ -3,15 +3,15 @@ import React from "react";
 
 interface LikeButtonProps {
     isLiked: boolean;
-    onToggle: () => void
+    onToggle?: () => void
 }
 
-const LikeButton: React.FC<LikeButtonProps> = ({isLiked, onToggle}) => {
+const LikeButton: React.FC<LikeButtonProps> = ({isLiked, onToggle = null}) => {
     return (
     <div className="d-flex">
     <span 
       style={{ cursor: 'pointer' }}
-      onClick={onToggle}>
+      onClick={() => onToggle && onToggle()}>
       {isLiked ? (
         <HeartFill className="text-danger me-1" size={25} />
         ) : (
