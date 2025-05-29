@@ -9,7 +9,6 @@ interface LikeButtonProps {
 
 const LikeButton: React.FC<LikeButtonProps> = ({isLiked, onToggle = null, size=25}) => {
     return (
-    <div className="d-flex">
     <span 
       style={{ cursor: 'pointer' }}
       onClick={() => onToggle && onToggle()}>
@@ -19,7 +18,6 @@ const LikeButton: React.FC<LikeButtonProps> = ({isLiked, onToggle = null, size=2
         <Heart className="text-muted me-1" size={size} />
       )}
     </span>
-    </div>
     );
 };
 export default LikeButton;
