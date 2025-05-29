@@ -19,7 +19,7 @@ const ReviewList = () => {
                     <StarRating rating ={3}></StarRating>
                     </Col>
                     <Col>
-                    <LikeButton isLiked={true}></LikeButton>
+                    <LikeButton isLiked={true} size={15}></LikeButton>
                     </Col>
                 </Row>
 
