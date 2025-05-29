@@ -72,26 +72,27 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
                 required/>
             </Form.Group>
             
-            <FormGroup className='mb-4'>
+            <FormGroup className='mb-2'>
                 <Row>
                     <Col>
-                    <Form.Label>Rating</Form.Label>
-                <StarRating rating={rating}
-                onRatingChange={setRating}>
-                </StarRating>
+                        <Form.Label>Rating</Form.Label>
+                        <StarRating rating={rating}
+                        onRatingChange={setRating}>
+                        </StarRating>
                     </Col>
                     <Col>
-                    <Form.Label>Like</Form.Label>
-                <LikeButton isLiked={liked}
-                onToggle={handleLikeToggle}>
-                </LikeButton>
+                        <Form.Label>Like</Form.Label>
+                        <LikeButton isLiked={liked}
+                        onToggle={handleLikeToggle}>
+                        </LikeButton>
                     </Col>
                 </Row>
             </FormGroup>             
-
-            <Button className="mb-3 " variant='primary' type='submit'>
+            <div className="d-grid gap-2">
+            <Button className="mt-3" variant='success' type='submit'>
                 Save
             </Button>
+            </div>
         </Form>
         </Card.Body>
         <Card.Footer className="text-muted p-0 px-4 py-2">{new Date().toISOString()}</Card.Footer>
