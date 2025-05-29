@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { type Review } from '../types/Review'
 import { reviewAPI } from '../services/reviewAPI'
-import { Button, Card, CardTitle} from 'react-bootstrap';
+import { Button, Card, CardTitle } from 'react-bootstrap';
 import ReviewItem from "./ReviewItem";
 
 const ReviewList = () => {
@@ -44,18 +44,17 @@ const ReviewList = () => {
                 <Card.Body>
                     <CardTitle className="mt-4" style={{fontWeight: "bold", fontSize: "1.4em"}}>Reviews</CardTitle>
                     <Card.Link href="/add"><Button className="mt-2">Add Review</Button></Card.Link>
-                </Card.Body>
+                    {reviews.length === 0 ? (
+                        <p>No reviews available</p>
+                    ) : (
+                        reviews.map((review) => (
+                            <ReviewItem
+                            review={review}
+                            deleteReview={deleteReview}></ReviewItem>
+                        ))
+                    )}
+            </Card.Body>
             </Card>
-
-            {reviews.length === 0 ? (
-                <p>No reviews available</p>
-            ) : (
-                reviews.map((review) => (
-                    <ReviewItem
-                    review={review}
-                    deleteReview={deleteReview}></ReviewItem>
-                ))
-            )}
         </div>
     );
 };
