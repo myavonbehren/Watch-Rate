@@ -14,6 +14,7 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
     const [content, setContent] = useState("");
     const [rating, setRating] = useState<number>(0);
     const [liked, setLiked] = useState<boolean>(false);
+    const [saved, setSaved] = useState(false);
 
     const handleLikeToggle = () => {
         setLiked(!liked);
@@ -21,6 +22,7 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setSaved(true);
     
         const newReview: Review = {
             username: 'currentUser',
@@ -55,7 +57,7 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
                     placeholder="Enter show title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    isInvalid={!title}
+                    isInvalid={saved && !title}
                     required/>
             </Form.Group>
 
@@ -67,7 +69,7 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
                 placeholder="Add a review..."
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                isInvalid={!content}
+                isInvalid={saved && !content}
                 required/>
             </Form.Group>
             
