@@ -8,3 +8,9 @@ export interface Review {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ReviewListInterface {
+  id: number;
+  name: string;
+  reviews: Review[];
+}
