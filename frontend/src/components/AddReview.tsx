@@ -44,10 +44,9 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
 
     return (
         
-     <Card className="p-0 shadow-sm border" style={{  width: '40rem'  }}>
-        
+    <Card className="p-0 shadow-sm border mx-auto" style={{ width: '95vw', maxWidth: '40rem'}}>
         <Card.Body>
-            <CardTitle className="mt-4" style={{fontWeight: "bold", fontSize: "1.4em"}}>Write a Review</CardTitle>
+        <CardTitle className="mt-4" style={{fontWeight: "bold", fontSize: "1.4em"}}>Write a Review</CardTitle>
             
         <Form onSubmit={handleSubmit} className="text-start">
             <Form.Group className="mb-4" controlId="formTitle">
@@ -97,6 +96,7 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
         </Card.Body>
         <Card.Footer className="text-muted p-0 px-4 py-2">{new Date().toISOString()}</Card.Footer>
     </Card>
+   
     );
 };
 
