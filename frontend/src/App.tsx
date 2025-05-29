@@ -3,6 +3,7 @@ import './App.css'
 import AddReview from './components/AddReview.tsx'
 import { type Review } from './types/Review.tsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ReviewList from './components/ReviewList.tsx';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
     <>
       <div>
         <AddReview addReview={(addReview)} />
+        <ReviewList></ReviewList>
       </div>
     </>
   )
