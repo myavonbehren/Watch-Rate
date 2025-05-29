@@ -82,9 +82,12 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
                     </Col>
                     <Col>
                         <Form.Label>Like</Form.Label>
-                        <LikeButton isLiked={liked}
-                        onToggle={handleLikeToggle}>
-                        </LikeButton>
+                        <div>
+                            <LikeButton isLiked={liked}
+                            onToggle={handleLikeToggle}>
+                            </LikeButton>
+                        </div>
+                        
                     </Col>
                 </Row>
             </FormGroup>             
