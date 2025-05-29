@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { Review } from '../src/types/Review'
+import { type Review } from '../types/Review'
 
 const API_URL = 'http://localhost:5023'
 
-export const reviewApi = {
+export const reviewAPI = {
   getAll: async (): Promise<Review[]> => {
     const response = await axios.get<Review[]>(`${API_URL}/reviews`);
     return response.data;
