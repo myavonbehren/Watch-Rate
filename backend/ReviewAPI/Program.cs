@@ -8,7 +8,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.WithOrigins("http://localhost:5173") // Vite's default port
+        policy.AllowAnyOrigin()
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -46,11 +46,12 @@ var reviews = new List<Review>
     new Review {Id = 3, Username = "Claire", Title = "Spongebob", Content = "Great animation!", Liked = false, Rating = 2, CreatedAt = date, UpdatedAt = date},
 };
 
-app.MapGet("/api/reviews", () => reviews)
+
+app.MapGet("/reviews", () => reviews)
     .WithName("GetAllReviews");
 
 // GET - Get a specific review by ID
-app.MapGet("/api/reviews/{id}", (int id) =>
+app.MapGet("/reviews/{id}", (int id) =>
 {
     var review = reviews.Find(b => b.Id == id);
     return review == null ? Results.NotFound() : Results.Ok(review);
@@ -58,16 +59,16 @@ app.MapGet("/api/reviews/{id}", (int id) =>
 .WithName("GetReviewById");
 
 // POST - Add a new review
-app.MapPost("/api/reviews", (Review review) =>
+app.MapPost("/reviews", (Review review) =>
 {
     review.Id = reviews.Count > 0 ? reviews.Max(b => b.Id) + 1 : 1;
     reviews.Add(review);
-    return Results.Created($"/api/reviews/{review.Id}", review);
+    return Results.Created($"/reviews/{review.Id}", review);
 })
 .WithName("AddReview");
 
 // PUT - Update a review
-app.MapPut("/api/reviews/{id}", (int id, Review updatedreview) =>
+app.MapPut("/reviews/{id}", (int id, Review updatedreview) =>
 {
     var index = reviews.FindIndex(b => b.Id == id);
     if (index == -1) return Results.NotFound();
@@ -79,7 +80,7 @@ app.MapPut("/api/reviews/{id}", (int id, Review updatedreview) =>
 .WithName("UpdateReview");
 
 // DELETE - Delete a review
-app.MapDelete("/api/reviews/{id}", (int id) =>
+app.MapDelete("/reviews/{id}", (int id) =>
 {
     var index = reviews.FindIndex(b => b.Id == id);
     if (index == -1) return Results.NotFound();
@@ -88,5 +89,6 @@ app.MapDelete("/api/reviews/{id}", (int id) =>
     return Results.NoContent();
 })
 .WithName("DeleteReview");
+
 
 app.Run();
