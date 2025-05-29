@@ -10,9 +10,10 @@ const ReviewList = () => {
         <Card className="p-0 shadow-sm border mx-auto" style={{ width: '95vw', maxWidth: '20rem'}}>
             <Card.Header>Username</Card.Header>
             <Card.Body className="text-start">
-                <CardTitle style={{fontSize: "1.2em"}}>Title</CardTitle>
-                <Card.Subtitle className="mb-2 text-muted">Date</Card.Subtitle>
-                <Card.Text>Content</Card.Text>
+                <Row className="align-items-center">
+                    <Col><CardTitle style={{fontSize: "1.2em"}}>Title</CardTitle></Col>
+                    <Col className="text-end"><Card.Subtitle className="mb-2 text-muted">Date</Card.Subtitle></Col>
+                </Row>
                 <Row>
                     <Col>
                     <StarRating rating ={3}></StarRating>
@@ -21,6 +22,11 @@ const ReviewList = () => {
                     <LikeButton isLiked={true}></LikeButton>
                     </Col>
                 </Row>
+
+                <Card.Text>Content</Card.Text>
+                
+                <Button variant="primary" size="sm"> Edit </Button>
+                <Button variant="danger" size="sm"> Delete </Button>
             </Card.Body>      
         </Card>
     );
