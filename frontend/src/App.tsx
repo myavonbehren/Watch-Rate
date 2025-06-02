@@ -1,25 +1,28 @@
 import { useState } from 'react'
 import './App.css'
-import AddReview from './components/AddReview.tsx'
-import { type Review } from './types/Review.tsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ReviewList from './components/ReviewList.tsx';
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomeNav from './components/HomeNav';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Reviews from './pages/Reviews';
 
 function App() {
-  const [reviews, setReviews] = useState<Review[]>();
-
-   const addReview = (newReview: Review) => {
-      console.log('Adding review:', newReview);
-    };
-
+  
   return (
-    <>
-      <div>
-        <AddReview addReview={(addReview)} />
-        <ReviewList></ReviewList>
-      </div>
-    </>
+
+    <div>
+      <Router>
+      <HomeNav />
+      <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/reviews" element={<Reviews />} />
+          <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+      </Routes>
+    </Router>
+    </div>
+
   )
 }
 
