@@ -31,7 +31,7 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ review, deleteReview }) => {
             </Card.Body> 
             <Card.Footer className="d-flex justify-content-end" style={{ backgroundColor: '#f8f9fa' }}>
                 <Stack direction="horizontal" gap={2}>
-                    <Card.Link href={`/edit/${review.id}`}><Button variant="outline-primary" size="sm"> Edit </Button></Card.Link>
+                    <Card.Link href={`/edit/${review.id}`}><Button variant="outline-dark" size="sm"> Edit </Button></Card.Link>
                     <Button variant="danger" size="sm" onClick={() => review.id && deleteReview(review.id)}> Delete </Button>
                 </Stack>
             </Card.Footer>     
