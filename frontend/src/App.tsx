@@ -6,6 +6,7 @@ import HomeNav from './components/HomeNav';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Reviews from './pages/Reviews';
+import Watchlist from './pages/Watchlist';
 
 function App() {
   
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Login />} />
           <Route path="/reviews" element={<Reviews />} />
+          <Route path="/watchlist" element={<Watchlist />} />
           <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>
     </Router>
