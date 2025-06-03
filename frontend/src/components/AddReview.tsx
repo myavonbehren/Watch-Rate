@@ -2,61 +2,100 @@ import { Form, Button, Card, FormGroup, CardTitle, Row, Col} from 'react-bootstr
 import  { type Review } from '../types/Review';
 import StarRating from './StarRating';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import LikeButton from './LikeButton';
+import { useNavigate, useParams } from 'react-router-dom';
+import { reviewAPI } from '../services/reviewAPI';
 
-interface AddReviewProps {
-    addReview: (review: Review) => void;
-}
-
-const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
-    const [title, setTitle] = React.useState('');
-    const [content, setContent] = useState("");
-    const [rating, setRating] = useState<number>(0);
-    const [liked, setLiked] = useState<boolean>(false);
+const AddReview = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const [saved, setSaved] = useState(false);
 
+    const [review, setReview] = useState<Review>({
+        username: 'default user',
+        title: '',
+        content: '',
+        rating: 0,
+        liked: false,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+    });
+
+    useEffect(() => {
+        if (id) {
+            const fetchReview = async () => {
+                setLoading(true);
+                try {
+                    const data = await reviewAPI.getById(Number(id));
+                    setReview(data);
+                } catch (err) {
+                    setError('Failed to fetch review details')
+                }
+                setLoading(false);
+            };
+            fetchReview();
+        }
+
+    }, [id]);
+
     const handleLikeToggle = () => {
-        setLiked(!liked);
-    }
+        setReview(prevReview => ({
+        ...prevReview,
+        liked: !prevReview.liked
+        }));
+    };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setSaved(true);
-    
-        const newReview: Review = {
-            username: 'currentUser',
-            title,
-            content,
-            rating,
-            liked,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-        };
+    const handleRating = (newRating: number) => {
+        setReview(prevReview => ({
+        ...prevReview,
+        rating: newRating
+        }));
+    };
 
-        addReview(newReview);
-        setTitle('');
-        setContent('');
-        setRating(0);
-        setLiked(false);
-        
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value, type } = e.target;
+        setReview(prevReview => ({
+            ...prevReview,
+            [name]: type === 'number' ? Number(value) : value
+        }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+            if (id) {
+                await reviewAPI.update(Number(id), review);
+            } else {
+                await reviewAPI.create(review);
+                console.log("after await create")
+            }
+            navigate('/');
+        } catch (err) {
+            setError(`Failed to ${id ? 'update' : 'create'} review`);
+            setLoading(false);
+        }
     };
 
     return (
         
     <Card className="p-0 shadow-sm border mx-auto" style={{ width: '95vw', maxWidth: '40rem'}}>
         <Card.Body>
-        <CardTitle className="mt-4" style={{fontWeight: "bold", fontSize: "1.4em"}}>Write a Review</CardTitle>
-            
+        <CardTitle className="mt-4" style={{fontWeight: "bold", fontSize: "1.4em"}}>{id ? 'Edit Review' :'Write a Review'}</CardTitle>
         <Form onSubmit={handleSubmit} className="text-start">
             <Form.Group className="mb-4" controlId="formTitle">
                 <Form.Label>Title</Form.Label>
                 <Form.Control
                     type="text"
                     placeholder="Enter show title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    isInvalid={saved && !title}
+                    name='title'
+                    value={review.title}
+                    onChange={handleChange}
+                    isInvalid={saved && ! review.title}
                     required/>
             </Form.Group>
 
@@ -65,10 +104,11 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
                 <Form.Control
                 as="textarea"
                 rows={3}
+                name='content'
                 placeholder="Add a review..."
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                isInvalid={saved && !content}
+                value={review.content}
+                onChange={handleChange}
+                isInvalid={saved && ! review.content}
                 required/>
             </Form.Group>
             
@@ -76,14 +116,14 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
                 <Row>
                     <Col>
                         <Form.Label>Rating</Form.Label>
-                        <StarRating rating={rating}
-                        onRatingChange={setRating}>
+                        <StarRating rating={review.rating}
+                        onRatingChange={handleRating}>
                         </StarRating>
                     </Col>
                     <Col>
                         <Form.Label>Like</Form.Label>
                         <div>
-                            <LikeButton isLiked={liked}
+                            <LikeButton isLiked={review.liked}
                             onToggle={handleLikeToggle}>
                             </LikeButton>
                         </div>
@@ -92,7 +132,7 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
             </FormGroup>             
             <div className="d-grid gap-2">
             <Button className="mt-3" variant='dark' type='submit'>
-                Post Review
+                {id ? 'Update Review' : 'Post Review'}
             </Button>
             </div>
         </Form>
