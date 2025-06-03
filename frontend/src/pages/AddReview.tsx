@@ -1,9 +1,9 @@
 import { Form, Button, Card, FormGroup, CardTitle, Row, Col} from 'react-bootstrap';
 import  { type Review } from '../types/Review';
-import StarRating from './StarRating';
+import StarRating from '../components/StarRating';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import LikeButton from './LikeButton';
+import LikeButton from '../components/LikeButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { reviewAPI } from '../services/reviewAPI';
 
