@@ -19,7 +19,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Login />} />
-          <Route path="/reviews" element={<Reviews />} />
+          <Route path="/add" element={<Reviews />} />
+          <Route path="/edit/:id" element={<Reviews />} />
           <Route path="/watchlist" element={<Watchlist />} />
           <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>
