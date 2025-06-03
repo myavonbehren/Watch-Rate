@@ -1,9 +1,11 @@
 import React from 'react';
+import ReviewList from '../components/ReviewList';
 
 const Home: React.FC = () => {
     return (
         <div>
-            <h1>Home</h1>
+            <h1>Recent Activity</h1>
+            <ReviewList></ReviewList>
         </div>
     );
 };
