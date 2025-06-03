@@ -43,12 +43,9 @@ const ReviewList = () => {
             {reviews.length === 0 ? (
                 <Alert key="dark" variant="dark">No reviews available</Alert>
             ) : (
-                <div className="row mt-3">
+                <div className="d-flex flex-wrap justify-content-start gap-3 mt-3">
                 {reviews.map((review) => (
-                    <div 
-                    key={review.id} 
-                    className="col-12 col-md-6 col-lg-4 mb-4"
-                    >
+                    <div key={review.id}>
                     <ReviewItem
                         review={review}
                         deleteReview={deleteReview}
