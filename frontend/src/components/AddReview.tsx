@@ -87,18 +87,16 @@ const AddReview: React.FC<AddReviewProps> = ({addReview}) => {
                             onToggle={handleLikeToggle}>
                             </LikeButton>
                         </div>
-                        
                     </Col>
                 </Row>
             </FormGroup>             
             <div className="d-grid gap-2">
-            <Button className="mt-3" variant='success' type='submit'>
-                Save
+            <Button className="mt-3" variant='dark' type='submit'>
+                Post Review
             </Button>
             </div>
         </Form>
         </Card.Body>
-        <Card.Footer className="text-muted p-0 px-4 py-2">{new Date().toISOString()}</Card.Footer>
     </Card>
    
     );
