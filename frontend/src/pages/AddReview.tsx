@@ -82,7 +82,6 @@ const AddReview = () => {
     };
 
     return (
-        
     <Card className="p-0 shadow-sm border mx-auto" style={{ width: '95vw', maxWidth: '40rem'}}>
         <Card.Body>
         <CardTitle className="mt-4" style={{fontWeight: "bold", fontSize: "1.4em"}}>{id ? 'Edit Review' :'Write a Review'}</CardTitle>
@@ -138,7 +137,6 @@ const AddReview = () => {
         </Form>
         </Card.Body>
     </Card>
-   
     );
 };
 
