@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 
 const HomeNav: React.FC = () => {
 
@@ -10,7 +10,7 @@ const HomeNav: React.FC = () => {
             <Navbar.Brand href="/">
                 <img
                 alt=""
-                src="/public/film-b.svg"
+                src="/film-b.svg"
                 width="30"
                 height="30"
                 className="d-inline-block align-top"
@@ -19,10 +19,15 @@ const HomeNav: React.FC = () => {
             </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
+            <Nav className="ms-auto align-items-center">
               <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/login">Login</Nav.Link>
               <Nav.Link href="/reviews">Reviews</Nav.Link>
+              <Nav.Link href="/login">
+                <Button variant="outline-dark" size="sm">Login</Button>
+              </Nav.Link>
+              <Nav.Link href="/signup">
+                <Button variant="dark" size="sm" >Sign Up</Button>
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
