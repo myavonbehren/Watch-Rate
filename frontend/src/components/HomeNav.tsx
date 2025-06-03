@@ -21,7 +21,7 @@ const HomeNav: React.FC = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto align-items-center">
               <Nav.Link href="/"> Home </Nav.Link>
-              <Nav.Link href="/reviews"> Write a Review </Nav.Link>
+              <Nav.Link href="/add"> Write a Review </Nav.Link>
               <Nav.Link href="/watchlist"> Watchlist </Nav.Link>
               <Nav.Link href="/login">
                 <Button variant="outline-dark" size="sm"> Login </Button>
