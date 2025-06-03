@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { type Review } from '../types/Review'
 import { reviewAPI } from '../services/reviewAPI'
-import { Button, Card, CardTitle } from 'react-bootstrap';
+import { Alert, Button, Card, CardTitle } from 'react-bootstrap';
 import ReviewItem from "./ReviewItem";
 
 const ReviewList = () => {
@@ -36,25 +36,27 @@ const ReviewList = () => {
     };
 
     if (loading) return <div> Loading... </div>;
-    if (error) return <div> Error: {error} </div>;
+    if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
 
     return (
         <div className="container-fluid">
-            <Card className="p-0 shadow-sm border mx-auto" style={{ width: '95vw', maxWidth: '40rem'}}>
-                <Card.Body>
-                    <CardTitle className="mt-4" style={{fontWeight: "bold", fontSize: "1.4em"}}>Reviews</CardTitle>
-                    <Card.Link href="/add"><Button className="mt-2">Add Review</Button></Card.Link>
-                    {reviews.length === 0 ? (
-                        <p>No reviews available</p>
-                    ) : (
-                        reviews.map((review) => (
-                            <ReviewItem
-                            review={review}
-                            deleteReview={deleteReview}></ReviewItem>
-                        ))
-                    )}
-            </Card.Body>
-            </Card>
+            {reviews.length === 0 ? (
+                <Alert key="dark" variant="dark">No reviews available</Alert>
+            ) : (
+                <div className="row mt-3">
+                {reviews.map((review) => (
+                    <div 
+                    key={review.id} 
+                    className="col-12 col-md-6 col-lg-4 mb-4"
+                    >
+                    <ReviewItem
+                        review={review}
+                        deleteReview={deleteReview}
+                    />
+                    </div>
+                ))}
+                </div>
+            )}
         </div>
     );
 };
