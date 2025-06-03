@@ -20,13 +20,14 @@ const HomeNav: React.FC = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto align-items-center">
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/reviews">Reviews</Nav.Link>
+              <Nav.Link href="/"> Home </Nav.Link>
+              <Nav.Link href="/reviews"> Write a Review </Nav.Link>
+              <Nav.Link href="/watchlist"> Watchlist </Nav.Link>
               <Nav.Link href="/login">
-                <Button variant="outline-dark" size="sm">Login</Button>
+                <Button variant="outline-dark" size="sm"> Login </Button>
               </Nav.Link>
               <Nav.Link href="/signup">
-                <Button variant="dark" size="sm" >Sign Up</Button>
+                <Button variant="dark" size="sm"> Sign Up </Button>
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
