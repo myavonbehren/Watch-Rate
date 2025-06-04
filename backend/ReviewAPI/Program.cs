@@ -126,7 +126,7 @@ app.MapGet("/shows", async (ShowDbContext db) =>
 .WithName("GetAllShows");
 
 
-// GET - Get a specific review by ID
+// GET - Get a specific show by ID
 app.MapGet("/shows/{id}", async (int id, ShowDbContext db) =>
 {
     var show = await db.Shows.FindAsync(id);
@@ -134,17 +134,29 @@ app.MapGet("/shows/{id}", async (int id, ShowDbContext db) =>
 })
 .WithName("GetShowById");
 
-// POST - Add a new review
+// POST - Add a new show
 app.MapPost("/shows", async (Show show, ShowDbContext db) =>
 {
     db.Shows.Add(show);
-    
+
     await db.SaveChangesAsync();
     return Results.Created($"/shows/{show.Id}", show);
 })
 .WithName("AddShow");
 
-// DELETE - Delete a review
+// PATCH - Update isWatched
+app.MapPatch("/api/shows/{id}/watched", async (int id, bool isWatched, ShowDbContext db) =>
+{
+    var show = await db.Shows.FindAsync(id);
+    if (show == null) return Results.NotFound();
+    
+    show.isWatched = isWatched;
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+})
+.WithName("UpdateWatched");
+
+// DELETE - Delete a show
 app.MapDelete("/shows/{id}", async (int id, ShowDbContext db) =>
 {
     var show = await db.Shows.FindAsync(id);
