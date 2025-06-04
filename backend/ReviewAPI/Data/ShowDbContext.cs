@@ -1,7 +1,7 @@
 using ShowAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ReviewAPI.Data;
+namespace ShowAPI.Data;
 
 public class ShowDbContext : DbContext
 {
@@ -29,10 +29,10 @@ public class ShowDbContext : DbContext
 
             new Show { Id = 5, Username = "phil_dunphy", Title = "Star Trek: The Next Generation", isWatched = false },
             new Show { Id = 6, Username = "phil_dunphy", Title = "Stranger Things", isWatched = false },
-            new Show { Id = 7, Username = "phil_dunphy", Title = "Rick and Morty", isWatched = false },
+            new Show { Id = 7, Username = "phil_dunphy", Title = "Rick and Morty", isWatched = true },
             new Show { Id = 8, Username = "phil_dunphy", Title = "Lost", isWatched = true },
 
-            new Show { Id = 10, Username = "cam_tucker", Title = "The Crown", isWatched = true },
+            new Show { Id = 10, Username = "cam_tucker", Title = "The Office", isWatched = true },
             new Show { Id = 11, Username = "cam_tucker", Title = "Overcompensating", isWatched = false },
             new Show { Id = 12, Username = "cam_tucker", Title = "Euphoria", isWatched = false }
         );

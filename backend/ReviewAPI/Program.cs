@@ -1,7 +1,9 @@
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using ReviewAPI.Models;
+using ShowAPI.Models;
 using ReviewAPI.Data;
+using ShowAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,12 +31,21 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddDbContext<ReviewDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection")));
 
+builder.Services.AddDbContext<ShowDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection")));
+
 var app = builder.Build();
 
 // Ensure database is created with seed data
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ReviewDbContext>();
+    dbContext.Database.EnsureCreated();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ShowDbContext>();
     dbContext.Database.EnsureCreated();
 }
 
@@ -49,6 +60,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// REVIEWS
 
 // GET - Get all reviews
 app.MapGet("/reviews", async (ReviewDbContext db) => 
@@ -105,5 +118,42 @@ app.MapDelete("/reviews/{id}", async (int id, ReviewDbContext db) =>
 })
 .WithName("DeleteReview");
 
+// SHOWS
+
+// GET - Get all shows
+app.MapGet("/shows", async (ShowDbContext db) =>
+    await db.Shows.ToListAsync())
+.WithName("GetAllShows");
+
+
+// GET - Get a specific review by ID
+app.MapGet("/shows/{id}", async (int id, ShowDbContext db) =>
+{
+    var show = await db.Shows.FindAsync(id);
+    return show == null ? Results.NotFound() : Results.Ok(show);
+})
+.WithName("GetShowById");
+
+// POST - Add a new review
+app.MapPost("/shows", async (Show show, ShowDbContext db) =>
+{
+    db.Shows.Add(show);
+    
+    await db.SaveChangesAsync();
+    return Results.Created($"/shows/{show.Id}", show);
+})
+.WithName("AddShow");
+
+// DELETE - Delete a review
+app.MapDelete("/shows/{id}", async (int id, ShowDbContext db) =>
+{
+    var show = await db.Shows.FindAsync(id);
+    if (show == null) return Results.NotFound();
+
+    db.Shows.Remove(show);
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+})
+.WithName("DeleteShow");
 
 app.Run();

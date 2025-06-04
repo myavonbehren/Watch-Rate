@@ -43,7 +43,7 @@ const ReviewList = () => {
             {reviews.length === 0 ? (
                 <Alert key="dark" variant="dark">No reviews available</Alert>
             ) : (
-                <div className="d-flex flex-wrap justify-content-center gap-3 mt-3">
+                <div className="d-flex flex-wrap justify-content-center gap-4 mt-4">
                 {reviews.map((review) => (
                     <div key={review.id}>
                     <ReviewItem
