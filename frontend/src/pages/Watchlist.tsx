@@ -7,7 +7,7 @@ import { Alert, Spinner } from 'react-bootstrap';
 
 const Watchlist: React.FC = () => {
     const [shows, setShows] = useState<Show[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState('')
 
     useEffect(() => {
@@ -19,6 +19,8 @@ const Watchlist: React.FC = () => {
             } catch (err) {
                 console.error('Error: ', err)
                 setError('Failed to fetch shows');
+                setLoading(false);
+            } finally {
                 setLoading(false);
             }
         };
@@ -47,7 +49,7 @@ const Watchlist: React.FC = () => {
             setLoading(false);
         } catch (err) {
             setError('Failed to add show');
-            setLoading(false);
+            throw err;
         }
     };
 
@@ -63,17 +65,25 @@ const Watchlist: React.FC = () => {
     };
 
     if (loading) return <Spinner animation="border" variant="warning" role="status"> <span className="visually-hidden">Loading...</span> </Spinner>
-    if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
+    // if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
     
 
     return (
         <div className='container-fluid pt-5 mt-3'>
             <h1 className='mb-4'>Watchlist</h1>
+            {error && (
+                <Alert 
+                variant="danger"
+                dismissible
+                onClose={()=> setError('')}
+                > Error: {error} </Alert>
+            )}
+
             <div className="d-flex flex-wrap gap-4 justify-content-center">
                 <div className='flex-shrink-0'>
                     <AddShow addShow={createShow}/>
                 </div>
-                <div className="flex-grow-1" style={{ minWidth: '300px' }}>
+                <div className="flex-grow-1" style={{ minWidth: '600px' }}>
                     <ShowList
                     shows={shows}
                     toggleWatched={updateWatched}
