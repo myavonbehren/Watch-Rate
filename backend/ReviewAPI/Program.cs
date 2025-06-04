@@ -1,5 +1,7 @@
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
 using ReviewAPI.Models;
+using ReviewAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,11 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Review API", Version = "v1" });
 }
 );
+
+// Add EF Core to the container
+builder.Services.AddDbContext<ReviewDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection")));
+
 
 var app = builder.Build();
 
