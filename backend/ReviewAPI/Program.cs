@@ -29,8 +29,14 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddDbContext<ReviewDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection")));
 
-
 var app = builder.Build();
+
+// Ensure database is created with seed data
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ReviewDbContext>();
+    dbContext.Database.EnsureCreated();
+}
 
 // Configure middleware
 app.UseCors("AllowReactApp");
@@ -53,46 +59,57 @@ var reviews = new List<Review>
     new Review {Id = 3, Username = "Claire", Title = "Spongebob", Content = "Great animation!", Liked = false, Rating = 2, CreatedAt = date, UpdatedAt = date},
 };
 
-
-app.MapGet("/reviews", () => reviews)
-    .WithName("GetAllReviews");
+// GET - Get all reviews
+app.MapGet("/reviews", async (ReviewDbContext db) => 
+    await db.Reviews.ToListAsync())
+.WithName("GetAllReviews");
 
 // GET - Get a specific review by ID
-app.MapGet("/reviews/{id}", (int id) =>
+app.MapGet("/reviews/{id}", async (int id, ReviewDbContext db) =>
 {
-    var review = reviews.Find(b => b.Id == id);
+    var review = await db.Reviews.FindAsync(id);
     return review == null ? Results.NotFound() : Results.Ok(review);
 })
 .WithName("GetReviewById");
 
 // POST - Add a new review
-app.MapPost("/reviews", (Review review) =>
+app.MapPost("/reviews", async (Review review, ReviewDbContext db) =>
 {
-    review.Id = reviews.Count > 0 ? reviews.Max(b => b.Id) + 1 : 1;
-    reviews.Add(review);
+    review.CreatedAt = DateTime.UtcNow;
+    review.UpdatedAt = DateTime.UtcNow;
+
+    db.Reviews.Add(review);
+    
+    await db.SaveChangesAsync();
     return Results.Created($"/reviews/{review.Id}", review);
 })
 .WithName("AddReview");
 
 // PUT - Update a review
-app.MapPut("/reviews/{id}", (int id, Review updatedreview) =>
+app.MapPut("/reviews/{id}", async (int id, Review updatedReview, ReviewDbContext db) =>
 {
-    var index = reviews.FindIndex(b => b.Id == id);
-    if (index == -1) return Results.NotFound();
-    
-    updatedreview.Id = id;
-    reviews[index] = updatedreview;
+    var review = await db.Reviews.FindAsync(id);
+    if (review == null) return Results.NotFound();
+
+    review.Title = updatedReview.Title;
+    review.Content = updatedReview.Content;
+    review.Rating = updatedReview.Rating;
+    review.Liked = updatedReview.Liked;
+    review.UpdatedAt = DateTime.UtcNow;
+
+    await db.SaveChangesAsync();
     return Results.NoContent();
 })
 .WithName("UpdateReview");
 
 // DELETE - Delete a review
-app.MapDelete("/reviews/{id}", (int id) =>
+app.MapDelete("/reviews/{id}", async (int id, ReviewDbContext db) =>
 {
-    var index = reviews.FindIndex(b => b.Id == id);
-    if (index == -1) return Results.NotFound();
-    
-    reviews.RemoveAt(index);
+    var review = await db.Reviews.FindAsync(id);
+    if (review == null) return Results.NotFound();
+
+    db.Reviews.Remove(review);
+    await db.SaveChangesAsync();
     return Results.NoContent();
 })
 .WithName("DeleteReview");
