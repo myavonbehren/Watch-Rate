@@ -23,10 +23,6 @@ export const reviewAPI = {
     await axios.put(`${API_URL}/reviews/${id}`, review);
   },
 
-  updateAvailability: async (id: number, isAvailable: boolean): Promise<void> => {
-    await axios.patch(`${API_URL}/reviews/${id}/availability`, isAvailable);
-  },
-
   delete: async (id: number): Promise<void> => {
     await axios.delete(`${API_URL}/reviews/${id}`);
   }
