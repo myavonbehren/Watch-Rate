@@ -5,11 +5,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const AddShow = () => {
-    const [title, setTitle] = useState('');
-    const [isWatched, setIsWatched] = useState('');
-    const [checked, setChecked] = useState(false);
     const [radioValue, setRadioValue] = useState('1');
-
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [saved, setSaved] = useState(false);
@@ -19,10 +15,27 @@ const AddShow = () => {
         { name: 'Unwatched', value: '2' },
     ];
 
-    const handleSubmit = () => {
-        console.log("show")
-    }
+    const [show, setShow] = useState<Show>({
+        username: 'default user',
+        title: '',
+        isWatched: false
+    });
 
+    /*
+    const [review, setReview] = useState<Review>({
+            username: 'default user',
+            title: '',
+            content: '',
+            rating: 0,
+            liked: false,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        });
+    */
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+    }
 
     if (loading) return <Spinner animation="border" variant="warning" role="status"> <span className="visually-hidden">Loading...</span> </Spinner>
     if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
