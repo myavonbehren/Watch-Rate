@@ -1,4 +1,4 @@
-import { Button } from 'react-bootstrap';
+import { Button, Spinner, Alert } from 'react-bootstrap';
 import { showAPI } from '../services/showAPI';
 import { type Show } from '../types/Show';
 import { useEffect, useState } from 'react';
@@ -48,6 +48,9 @@ const ShowList = () => {
         }
     };
 
+    if (loading) return <Spinner animation="border" variant="warning" role="status"> <span className="visually-hidden">Loading...</span> </Spinner>
+    if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
+    
     return (
         <table className="table table-striped">
             <thead className="table-dark">
