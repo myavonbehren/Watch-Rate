@@ -18,9 +18,9 @@ export const showAPI = {
     const response = await axios.post<Show>(`${API_URL}/shows`, show);
     return response.data;
   },
-  
-  updateWatched: async (id: number, isWatched: boolean): Promise<void> => {
-    await axios.patch(`/shows/${id}/watched?isWatched=${isWatched}`);
+
+  updateWatched: async (id: number, isWatched: boolean): Promise<void> => {    
+    await axios.patch(`${API_URL}/shows/${id}/watched?isWatched=${isWatched}`);
   },
 
   delete: async (id: number): Promise<void> => {

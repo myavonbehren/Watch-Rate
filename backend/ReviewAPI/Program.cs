@@ -145,7 +145,7 @@ app.MapPost("/shows", async (Show show, ShowDbContext db) =>
 .WithName("AddShow");
 
 // PATCH - Update isWatched
-app.MapPatch("/api/shows/{id}/watched", async (int id, bool isWatched, ShowDbContext db) =>
+app.MapPatch("/shows/{id}/watched", async (int id, bool isWatched, ShowDbContext db) =>
 {
     var show = await db.Shows.FindAsync(id);
     if (show == null) return Results.NotFound();

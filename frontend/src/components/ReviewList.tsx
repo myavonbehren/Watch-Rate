@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { type Review } from '../types/Review'
 import { reviewAPI } from '../services/reviewAPI'
-import { Alert } from 'react-bootstrap';
+import { Alert, Spinner } from 'react-bootstrap';
 import ReviewItem from "./ReviewItem";
 
 const ReviewList = () => {
@@ -35,7 +35,7 @@ const ReviewList = () => {
         }
     };
 
-    if (loading) return <div> Loading... </div>;
+    if (loading) return <Spinner animation="border" variant="warning" role="status"> <span className="visually-hidden">Loading...</span> </Spinner>
     if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
 
     return (        
