@@ -1,4 +1,4 @@
-import { Form, Button, Card, FormGroup, CardTitle, Row, Col} from 'react-bootstrap';
+import { Form, Button, Card, FormGroup, CardTitle, Row, Col, Spinner, Alert} from 'react-bootstrap';
 import  { type Review } from '../types/Review';
 import StarRating from '../components/StarRating';
 import React from 'react';
@@ -12,7 +12,6 @@ const AddReview = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [saved, setSaved] = useState(false);
 
     const [review, setReview] = useState<Review>({
         username: 'default user',
@@ -81,6 +80,9 @@ const AddReview = () => {
         }
     };
 
+    if (loading) return <Spinner animation="border" variant="warning" role="status"> <span className="visually-hidden">Loading...</span> </Spinner>
+    if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
+
     return (
     <Card className="p-0 shadow-sm border mx-auto" style={{ width: '95vw', maxWidth: '40rem'}}>
         <Card.Body>
@@ -94,7 +96,7 @@ const AddReview = () => {
                     name='title'
                     value={review.title}
                     onChange={handleChange}
-                    isInvalid={saved && ! review.title}
+                    isInvalid={!review.title}
                     required/>
             </Form.Group>
 
@@ -107,7 +109,7 @@ const AddReview = () => {
                 placeholder="Add a review..."
                 value={review.content}
                 onChange={handleChange}
-                isInvalid={saved && ! review.content}
+                isInvalid={!review.content}
                 required/>
             </Form.Group>
             

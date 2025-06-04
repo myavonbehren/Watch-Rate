@@ -1,7 +1,7 @@
-import { Form, Button, Card, FormGroup, CardTitle, CardHeader, ToggleButton, ButtonGroup} from 'react-bootstrap';
-import  { type Review } from '../types/Review';
-import React from 'react';
-import { useState, useEffect } from 'react';
+import { Form, Button, Card, CardHeader, ToggleButton, ButtonGroup, Spinner, Alert} from 'react-bootstrap';
+import { type Show } from '../types/Show';
+import { showAPI } from '../services/showAPI';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const AddShow = () => {
@@ -23,6 +23,10 @@ const AddShow = () => {
         console.log("show")
     }
 
+
+    if (loading) return <Spinner animation="border" variant="warning" role="status"> <span className="visually-hidden">Loading...</span> </Spinner>
+    if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
+    
     return (
     <Card className="p-0 shadow-sm border mx-auto" style={{width: '20rem'}}>
         <CardHeader>Add Show</CardHeader>

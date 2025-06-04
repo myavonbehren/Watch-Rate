@@ -5,7 +5,7 @@ import ShowList from '../components/ShowList';
 const Watchlist: React.FC = () => {
     return (
         <div>
-            <h1>Watchlist</h1>
+            <h1 className='mb-4'>Watchlist</h1>
             <div className="d-flex flex-wrap gap-4 justify-content-center">
                 <div className='flex-shrink-0'>
                     <AddShow/>
