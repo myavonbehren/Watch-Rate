@@ -1,29 +1,35 @@
-import axios from 'axios'
+//import axios from 'axios'
 import { type Review } from '../types/Review'
+import { configureReviewApiWithBasicAuth } from './authService';
 
-const API_URL = 'http://localhost:5023'
+//const API_URL = 'http://localhost:5023'
 
 export const reviewAPI = {
   getAll: async (): Promise<Review[]> => {
-    const response = await axios.get<Review[]>(`${API_URL}/reviews`);
+    const api = configureReviewApiWithBasicAuth();
+    const response = await api.get<Review[]>(`/reviews`);
     return response.data;
   },
 
   getById: async (id: number): Promise<Review> => {
-    const response = await axios.get<Review>(`${API_URL}/reviews/${id}`);
+    const api = configureReviewApiWithBasicAuth();
+    const response = await api.get<Review>(`/reviews/${id}`);
     return response.data;
   },
 
   create: async (review: Review): Promise<Review> => {
-    const response = await axios.post<Review>(`${API_URL}/reviews`, review);
+    const api = configureReviewApiWithBasicAuth();
+    const response = await api.post<Review>(`/reviews`, review);
     return response.data;
   },
 
   update: async (id: number, review: Review): Promise<void> => {
-    await axios.put(`${API_URL}/reviews/${id}`, review);
+    const api = configureReviewApiWithBasicAuth();
+    await api.put(`/reviews/${id}`, review);
   },
 
   delete: async (id: number): Promise<void> => {
-    await axios.delete(`${API_URL}/reviews/${id}`);
+    const api = configureReviewApiWithBasicAuth();
+    await api.delete(`/reviews/${id}`);
   }
 };

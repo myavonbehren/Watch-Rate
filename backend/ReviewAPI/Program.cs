@@ -1,9 +1,16 @@
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Security.Claims;
+
 using ReviewAPI.Models;
 using ShowAPI.Models;
 using ReviewAPI.Data;
 using ShowAPI.Data;
+using ReviewAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +41,22 @@ builder.Services.AddDbContext<ReviewDbContext>(options =>
 builder.Services.AddDbContext<ShowDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection")));
 
+// Configure basic authentication
+builder.Services.AddAuthentication("BasicAuthentication")
+    .AddScheme<AuthenticationSchemeOptions, ReviewApiBasicAuthHandler>("BasicAuthentication", null);
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("BasicAuthentication", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim(ClaimTypes.NameIdentifier);
+    });
+});
+
+// Add services
+builder.Services.AddScoped<IUserService, UserService>();
+
 var app = builder.Build();
 
 // Ensure database is created with seed data
@@ -51,6 +74,10 @@ using (var scope = app.Services.CreateScope())
 
 // Configure middleware
 app.UseCors("AllowReactApp");
+
+// Add usage before your existing endpoints
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -123,7 +150,7 @@ app.MapDelete("/reviews/{id}", async (int id, ReviewDbContext db) =>
 // GET - Get all shows
 app.MapGet("/shows", async (ShowDbContext db) =>
     await db.Shows.ToListAsync())
-.WithName("GetAllShows");
+.WithName("GetAllShows").RequireAuthorization();
 
 
 // GET - Get a specific show by ID
@@ -167,5 +194,14 @@ app.MapDelete("/shows/{id}", async (int id, ShowDbContext db) =>
     return Results.NoContent();
 })
 .WithName("DeleteShow");
+
+// Add a protected route
+app.MapGet("/api/protected-reviws", (ClaimsPrincipal user) =>
+{
+    // Return the authenticated user's name or a simple message
+    return Results.Ok(new { message = $"Hello, {user.Identity?.Name ?? "authenticated user"}! This is a protected endpoint." });
+})
+.WithName("GetProtectedReviews")
+.RequireAuthorization();
 
 app.Run();
