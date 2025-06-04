@@ -50,15 +50,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//In-memory database for testing purposes
-DateTime date = new DateTime(2025, 5, 28);
-var reviews = new List<Review>
-{
-    new Review {Id = 1, Username = "Manny", Title = "Friends", Content = "Funny show!", Liked = true, Rating = 3, CreatedAt = date, UpdatedAt = date},
-    new Review {Id = 2, Username = "Gloria", Title = "Sopranos", Content = "Great show!", Liked = true, Rating = 4, CreatedAt = date, UpdatedAt = date},
-    new Review {Id = 3, Username = "Claire", Title = "Spongebob", Content = "Great animation!", Liked = false, Rating = 2, CreatedAt = date, UpdatedAt = date},
-};
-
 // GET - Get all reviews
 app.MapGet("/reviews", async (ReviewDbContext db) => 
     await db.Reviews.ToListAsync())
