@@ -1,4 +1,4 @@
-import { Form, Button, Card, CardHeader, ToggleButton, ButtonGroup, Alert} from 'react-bootstrap';
+import { Form, Button, Card, CardHeader, ToggleButton, ButtonGroup} from 'react-bootstrap';
 import { type Show } from '../types/Show';
 import React, { useState } from 'react';
 
@@ -8,8 +8,6 @@ interface AddShowProps {
 
 const AddShow: React.FC<AddShowProps> = ({ addShow }) => {
     const [radioValue, setRadioValue] = useState('1');
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
 
     const radios = [
         { name: 'Watched', value: '1' },
@@ -53,7 +51,7 @@ const AddShow: React.FC<AddShowProps> = ({ addShow }) => {
     };
 
     //if (loading) return <Spinner animation="border" variant="warning" role="status"> <span className="visually-hidden">Loading...</span> </Spinner>
-    if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
+    //if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
     
     return (
     <Card className="p-0 shadow-sm border mx-auto" style={{width: '20rem'}}>
@@ -94,9 +92,8 @@ const AddShow: React.FC<AddShowProps> = ({ addShow }) => {
             <Button 
             variant='dark' 
             type='submit'
-            disabled={loading}
             >
-            {loading ? 'Adding Show...' : 'Add Show'}
+            Add Show
             </Button>
             </div>
         </Form>

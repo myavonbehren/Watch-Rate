@@ -1,6 +1,5 @@
-import { Button, Spinner, Alert } from 'react-bootstrap';
+import { Button} from 'react-bootstrap';
 import { type Show } from '../types/Show';
-import React, { useEffect, useState } from 'react';
 
 interface ShowListProps {
   shows: Show[];
