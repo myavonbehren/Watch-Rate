@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 interface ShowListProps {
   shows: Show[];
-  toggleWatched: (id: number) => void;
+  toggleWatched: (id: number, currentState: boolean) => void;
   deleteShow: (id: number) => void;
 }
 
@@ -26,7 +26,7 @@ const ShowList: React.FC<ShowListProps> = ({ shows, toggleWatched, deleteShow}) 
                         <Button 
                         variant={show.isWatched ? 'warning' : 'dark'} 
                         size='sm'
-                        onClick={() => toggleWatched}>
+                        onClick={() => show.id && toggleWatched(show.id, show.isWatched)}>
                             {show.isWatched ? 'Watched' : 'Unwatched'}
                         </Button>
                     </td>
@@ -34,7 +34,7 @@ const ShowList: React.FC<ShowListProps> = ({ shows, toggleWatched, deleteShow}) 
                         <Button 
                         variant='danger' 
                         size='sm' 
-                        onClick={() => deleteShow}>
+                        onClick={() => show.id && deleteShow(show.id)}>
                             Delete
                         </Button>
                     </td>

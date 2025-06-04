@@ -3,7 +3,7 @@ import AddShow from '../components/AddShow';
 import ShowList from '../components/ShowList';
 import { showAPI } from '../services/showAPI';
 import { type Show } from '../types/Show';
-import { Alert, Spinner } from 'react-bootstrap';}
+import { Alert, Spinner } from 'react-bootstrap';
 
 const Watchlist: React.FC = () => {
     const [shows, setShows] = useState<Show[]>([]);
@@ -39,7 +39,17 @@ const Watchlist: React.FC = () => {
         }
     };
 
-    const addShow = async 
+    const createShow = async (newShow: Show) => {
+        setLoading(true);
+        try {
+            const createdShow = await showAPI.create(newShow);
+            setShows(prevShows => [...prevShows, createdShow]);
+            setLoading(false);
+        } catch (err) {
+            setError('Failed to add show');
+            setLoading(false);
+        }
+    };
 
     const deleteShow = async (id: number) => {
         if (window.confirm('Are you sure you want to delete this show?')) {
@@ -57,14 +67,18 @@ const Watchlist: React.FC = () => {
     
 
     return (
-        <div>
+        <div className='container-fluid pt-5 mt-3'>
             <h1 className='mb-4'>Watchlist</h1>
             <div className="d-flex flex-wrap gap-4 justify-content-center">
                 <div className='flex-shrink-0'>
-                    <AddShow addShow={AddShow}/>
+                    <AddShow addShow={createShow}/>
                 </div>
                 <div className="flex-grow-1" style={{ minWidth: '300px' }}>
-                    <ShowList/>
+                    <ShowList
+                    shows={shows}
+                    toggleWatched={updateWatched}
+                    deleteShow={deleteShow}
+                    />
                 </div>
             </div>
         </div>

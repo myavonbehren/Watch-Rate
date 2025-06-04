@@ -41,9 +41,9 @@ const AddShow: React.FC<AddShowProps> = ({ addShow }) => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        setLoading(true);
+
         addShow(show);
-        setLoading(false);
+        
         setShow({
             username: 'default user',
             title: '',
