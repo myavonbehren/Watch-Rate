@@ -36,10 +36,18 @@ const ReviewList = () => {
     };
 
     if (loading) return <Spinner animation="border" variant="warning" role="status"> <span className="visually-hidden">Loading...</span> </Spinner>
-    if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
+    //if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
 
     return (        
         <div className="container-fluid">
+            {error && (
+                <Alert 
+                variant="danger"
+                dismissible
+                onClose={()=> setError('')}
+                > Error: {error} </Alert>
+            )}
+
             {reviews.length === 0 ? (
                 <Alert key="dark" variant="dark">No reviews available</Alert>
             ) : (
