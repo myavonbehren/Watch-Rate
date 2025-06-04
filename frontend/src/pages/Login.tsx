@@ -5,8 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { setBasicAuth } from '../services/authService';
 import { reviewAPI } from '../services/reviewAPI';
 
-const Login = () => {
-    //const [email, setEmail] = useState('');
+interface LoginProps {
+    isNewUser: boolean;
+}
+
+const Login: React.FC<LoginProps> = ({isNewUser}) => {
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [error, setError] = useState('');
@@ -43,7 +47,7 @@ const Login = () => {
         <Card className="p-0 shadow-sm border mx-auto" style={{width: '20rem'}}>
             {error && <Alert variant='danger'>{error}</Alert>}
 
-            <Card.Header>Login</Card.Header>
+            <Card.Header>{isNewUser ? 'Sign Up' : 'Login'}</Card.Header>
             <Card.Body>
             <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formName">
@@ -55,7 +59,7 @@ const Login = () => {
                     onChange={(e) => setUsername(e.target.value)}
                 />
                 </Form.Group>
-                {/*
+                {isNewUser &&
                 <Form.Group className="mb-3" controlId="formEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
@@ -65,7 +69,7 @@ const Login = () => {
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 </Form.Group>
-                */}
+                }
                 <Form.Group className="mb-3" controlId="formPassword">
                     <Form.Label>Password</Form.Label>
                     <Form.Control

@@ -82,11 +82,18 @@ const AddReview = () => {
     };
 
     if (loading) return <Spinner animation="border" variant="warning" role="status"> <span className="visually-hidden">Loading...</span> </Spinner>
-    if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
+    //if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
 
     return (
     <Card className="p-0 shadow-sm border mx-auto" style={{ width: '95vw', maxWidth: '40rem'}}>
         <Card.Body>
+        {error && (
+                <Alert 
+                variant="danger"
+                dismissible
+                onClose={()=> setError('')}
+                > Error: {error} </Alert>
+            )}
         <CardTitle className="mt-4" style={{fontWeight: "bold", fontSize: "1.4em"}}>{id ? 'Edit Review' :'Write a Review'}</CardTitle>
         <Form onSubmit={handleSubmit} className="text-start">
             <Form.Group className="mb-4" controlId="formTitle">

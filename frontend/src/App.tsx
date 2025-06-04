@@ -17,8 +17,8 @@ function App() {
       <HomeNav />
       <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Login />} />
+          <Route path="/login" element={<Login isNewUser= {false} />} />
+          <Route path="/signup" element={<Login isNewUser={true}/>} />
           <Route path="/add" element={<AddReview />} />
           <Route path="/edit/:id" element={<AddReview />} />
           <Route path="/watchlist" element={<Watchlist />} />
