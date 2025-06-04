@@ -8,7 +8,8 @@ interface AddShowProps {
 
 const AddShow: React.FC<AddShowProps> = ({ addShow }) => {
     const [radioValue, setRadioValue] = useState('1');
-
+    const [saved, setSaved] = useState(false);
+    
     const radios = [
         { name: 'Watched', value: '1' },
         { name: 'Unwatched', value: '2' },
@@ -39,6 +40,7 @@ const AddShow: React.FC<AddShowProps> = ({ addShow }) => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        setSaved(false);
 
         addShow(show);
         
@@ -66,7 +68,7 @@ const AddShow: React.FC<AddShowProps> = ({ addShow }) => {
                     name='title'
                     onChange={handleChange}
                     value={show.title}
-                    isInvalid={!show.title}
+                    isInvalid={saved && !show.title}
                     required/>
             </Form.Group>
             <div className="d-grid gap-2">

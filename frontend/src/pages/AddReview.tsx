@@ -12,6 +12,7 @@ const AddReview = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [saved, setSaved] = useState(false);
 
     const [review, setReview] = useState<Review>({
         username: 'default user',
@@ -65,6 +66,7 @@ const AddReview = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
+        setSaved(false)
 
         try {
             if (id) {
@@ -95,7 +97,7 @@ const AddReview = () => {
                     name='title'
                     value={review.title}
                     onChange={handleChange}
-                    isInvalid={!review.title}
+                    isInvalid={saved && !review.title}
                     required/>
             </Form.Group>
 
@@ -108,7 +110,7 @@ const AddReview = () => {
                 placeholder="Add a review..."
                 value={review.content}
                 onChange={handleChange}
-                isInvalid={!review.content}
+                isInvalid={saved && !review.content}
                 required/>
             </Form.Group>
             
