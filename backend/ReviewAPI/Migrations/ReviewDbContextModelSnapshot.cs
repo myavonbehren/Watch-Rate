@@ -57,9 +57,9 @@ namespace ReviewAPI.Migrations
                         new
                         {
                             Id = 1,
-                            Content = "After rewatching the entire series, I have mixed feelings about Friends. While the chemistry between the six main characters is undeniably great and there are genuinely hilarious moments throughout, some of the humor feels dated now. The show perfectly captures that post-college, pre-real-adulthood phase of life that many people can relate to. Ross and Rachel's on-again, off-again relationship gets exhausting, but episodes like 'The One with the Embryos' and 'The One Where No One's Ready' are comedy gold. It's comfort TV at its finest, even if it's not as progressive as we'd like by today's standards.",
+                            Content = "After rewatching the entire series, I have mixed feelings about Friends. While the chemistry between the six main characters is undeniably great and there are genuinely hilarious moments throughout, some of the humor feels dated now. The show perfectly captures that post-college, pre-real-adulthood phase of life that many people can relate to.",
                             CreatedAt = new DateTime(2025, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Liked = true,
+                            Liked = false,
                             Rating = 3,
                             Title = "Friends",
                             UpdatedAt = new DateTime(2025, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -69,12 +69,12 @@ namespace ReviewAPI.Migrations
                         {
                             Id = 2,
                             Content = "The Sopranos completely changed television forever. James Gandolfini's portrayal of Tony Soprano is masterful - he makes you sympathize with a character who does terrible things. The writing is sophisticated, dealing with themes of family, therapy, and the American Dream. Some episodes drag a bit, but the character development and psychological depth more than make up for it. The finale is still controversial, but I think it was brilliant. A true masterpiece of television.",
-                            CreatedAt = new DateTime(2025, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2025, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Liked = true,
                             Rating = 4,
                             Title = "Sopranos",
-                            UpdatedAt = new DateTime(2025, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Username = "cam_tucker"
+                            UpdatedAt = new DateTime(2025, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Username = "mannydelgado"
                         },
                         new
                         {
@@ -91,12 +91,12 @@ namespace ReviewAPI.Migrations
                         {
                             Id = 4,
                             Content = "Absolutely phenomenal from start to finish. Bryan Cranston's transformation from Walter White the mild-mannered teacher to Heisenberg is incredible to watch. Every episode builds tension perfectly, and the cinematography is stunning. The character development is some of the best I've ever seen on television. Jesse's journey is heartbreaking but necessary. This show proves that television can be just as compelling as any movie. Perfect ending too.",
-                            CreatedAt = new DateTime(2025, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2025, 6, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Liked = true,
                             Rating = 5,
                             Title = "Breaking Bad",
-                            UpdatedAt = new DateTime(2025, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Username = "phil_dunphy"
+                            UpdatedAt = new DateTime(2025, 6, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Username = "cam_tucker"
                         },
                         new
                         {
@@ -106,19 +106,19 @@ namespace ReviewAPI.Migrations
                             Liked = true,
                             Rating = 4,
                             Title = "The Office",
-                            UpdatedAt = new DateTime(2025, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(2025, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Username = "cam_tucker"
                         },
                         new
                         {
                             Id = 6,
                             Content = "Season 1 was amazing - great 80s nostalgia, awesome kids, and genuinely scary moments with the Demogorgon. But honestly, it's gone downhill since then. They keep making the threats bigger and bigger, and it's getting ridiculous. The kids were great in season 1 but now they're older and the acting feels forced. Still watch it because I'm invested, but it's not the same show anymore.",
-                            CreatedAt = new DateTime(2025, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2025, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Liked = false,
                             Rating = 3,
                             Title = "Stranger Things",
-                            UpdatedAt = new DateTime(2025, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Username = "mannydelgado"
+                            UpdatedAt = new DateTime(2025, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Username = "cam_tucker"
                         },
                         new
                         {
@@ -135,33 +135,22 @@ namespace ReviewAPI.Migrations
                         {
                             Id = 8,
                             Content = "Rick and Morty is brilliant science fiction disguised as crude humor. The show tackles complex philosophical concepts about existence, free will, and the meaninglessness of life while maintaining incredible comedic timing. Dan Harmon's writing is sharp, and the voice acting is perfect. Some episodes are absolute masterpieces of storytelling. However, the fanbase can be quite toxic, which unfortunately affects how people perceive the show.",
-                            CreatedAt = new DateTime(2025, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2025, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Liked = true,
                             Rating = 4,
                             Title = "Rick and Morty",
-                            UpdatedAt = new DateTime(2025, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Username = "alex_d"
+                            UpdatedAt = new DateTime(2025, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Username = "phil_dunphy"
                         },
                         new
                         {
                             Id = 9,
-                            Content = "The Crown is beautifully produced with incredible attention to historical detail and stunning cinematography. The performances are generally excellent, particularly Claire Foy as young Elizabeth II. However, as someone who studied history, I sometimes find myself questioning the dramatic liberties taken with real events. It's entertainment, not documentary, but the line gets blurred. Still, it's compelling television that makes you think about power, duty, and sacrifice.",
-                            CreatedAt = new DateTime(2025, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Liked = true,
-                            Rating = 3,
-                            Title = "The Crown",
-                            UpdatedAt = new DateTime(2025, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Username = "cam_tucker"
-                        },
-                        new
-                        {
-                            Id = 10,
                             Content = "I wasn't expecting much from a show about soccer (sorry, football), but Ted Lasso completely won me over. Jason Sudeikis brings such warmth and authenticity to the character. The show deals with divorce, mental health, and toxic masculinity in really thoughtful ways. Sure, it can be a bit saccharine at times, but in today's world, we need more kindness and optimism. Made me cry more than I'd like to admit.",
-                            CreatedAt = new DateTime(2025, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2025, 6, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Liked = true,
                             Rating = 4,
                             Title = "Ted Lasso",
-                            UpdatedAt = new DateTime(2025, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(2025, 6, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Username = "phil_dunphy"
                         });
                 });

@@ -17,5 +17,4 @@ const Watchlist: React.FC = () => {
         </div>
     );
 };
-
 export default Watchlist;

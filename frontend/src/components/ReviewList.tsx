@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { type Review } from '../types/Review'
 import { reviewAPI } from '../services/reviewAPI'
-import { Alert, Button, Card, CardTitle } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 import ReviewItem from "./ReviewItem";
 
 const ReviewList = () => {

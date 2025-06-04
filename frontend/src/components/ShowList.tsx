@@ -1,11 +1,6 @@
-import { Form, Button, Card, FormGroup, CardTitle, CardHeader, ToggleButton, ButtonGroup, Table} from 'react-bootstrap';
-import  { type Review } from '../types/Review';
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 const ShowList = () => {
-
     return (
         <table className="table table-striped">
             <thead className="table-dark">
