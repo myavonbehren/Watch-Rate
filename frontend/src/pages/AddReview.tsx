@@ -139,5 +139,4 @@ const AddReview = () => {
     </Card>
     );
 };
-
 export default AddReview;

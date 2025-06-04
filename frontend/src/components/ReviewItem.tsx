@@ -34,7 +34,7 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ review, deleteReview }) => {
                     <Card.Link href={`/edit/${review.id}`}><Button variant="outline-dark" size="sm"> Edit </Button></Card.Link>
                     <Button variant="danger" size="sm" onClick={() => review.id && deleteReview(review.id)}> Delete </Button>
                 </Stack>
-            </Card.Footer>     
+            </Card.Footer>
         </Card>
     );
 };
