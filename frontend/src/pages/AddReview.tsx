@@ -71,7 +71,6 @@ const AddReview = () => {
                 await reviewAPI.update(Number(id), review);
             } else {
                 await reviewAPI.create(review);
-                console.log("after await create")
             }
             navigate('/');
         } catch (err) {

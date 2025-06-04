@@ -1,14 +1,15 @@
-import { Form, Button, Card, CardHeader, ToggleButton, ButtonGroup, Spinner, Alert} from 'react-bootstrap';
+import { Form, Button, Card, CardHeader, ToggleButton, ButtonGroup, Alert} from 'react-bootstrap';
 import { type Show } from '../types/Show';
-import { showAPI } from '../services/showAPI';
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
 
-const AddShow = () => {
+interface AddShowProps {
+    addShow: (newShow: Show) => void;
+}
+
+const AddShow: React.FC<AddShowProps> = ({ addShow }) => {
     const [radioValue, setRadioValue] = useState('1');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [saved, setSaved] = useState(false);
 
     const radios = [
         { name: 'Watched', value: '1' },
@@ -21,23 +22,37 @@ const AddShow = () => {
         isWatched: false
     });
 
-    /*
-    const [review, setReview] = useState<Review>({
+    const handleWatchedToggle = (value: string) => {
+        setRadioValue(value);
+
+        setShow(prevShow => ({
+            ...prevShow,
+            isWatched: value === '1'
+        }));
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setShow(prevShow => ({
+            ...prevShow,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        addShow(show);
+        setLoading(false);
+        setShow({
             username: 'default user',
             title: '',
-            content: '',
-            rating: 0,
-            liked: false,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
+            isWatched: false
         });
-    */
+        setRadioValue('1');
+    };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-    }
-
-    if (loading) return <Spinner animation="border" variant="warning" role="status"> <span className="visually-hidden">Loading...</span> </Spinner>
+    //if (loading) return <Spinner animation="border" variant="warning" role="status"> <span className="visually-hidden">Loading...</span> </Spinner>
     if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
     
     return (
@@ -51,9 +66,9 @@ const AddShow = () => {
                     type="text"
                     placeholder="Enter show title"
                     name='title'
-                    //value={review.title}
-                    //onChange={handleChange}
-                    //isInvalid={saved && ! review.title}
+                    onChange={handleChange}
+                    value={show.title}
+                    isInvalid={!show.title}
                     required/>
             </Form.Group>
             <div className="d-grid gap-2">
@@ -67,7 +82,7 @@ const AddShow = () => {
                     name="radio"
                     value={radio.value}
                     checked={radioValue === radio.value}
-                    onChange={(e) => setRadioValue(e.currentTarget.value)}
+                    onChange={(e) => handleWatchedToggle(e.currentTarget.value)}
                 >
                     {radio.name}
                 </ToggleButton>
@@ -76,8 +91,12 @@ const AddShow = () => {
             </ButtonGroup>
             </div>
             <div className="d-grid gap-2">
-            <Button variant='dark' type='submit'>
-                Add Show
+            <Button 
+            variant='dark' 
+            type='submit'
+            disabled={loading}
+            >
+            {loading ? 'Adding Show...' : 'Add Show'}
             </Button>
             </div>
         </Form>
