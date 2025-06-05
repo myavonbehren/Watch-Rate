@@ -30,14 +30,39 @@ public class UserDbContext : DbContext
         modelBuilder.Entity<User>().Property(u => u.Password).IsRequired().HasMaxLength(100);
         modelBuilder.Entity<User>().Property(u => u.CreatedAt).IsRequired();
 
-        modelBuilder.Entity<User>().HasData(new User
-        {
-            Id = 1,
-            Username = "admin",
-            Email = "admin@mvonbehren.com",
-            Password = "password",
-            CreatedAt = DateTime.UtcNow
-        });
+        modelBuilder.Entity<User>().HasData(
+            new User
+            {
+                Id = 1,
+                Username = "admin",
+                Email = "admin@mvonbehren.com",
+                Password = "password",
+                CreatedAt = DateTime.UtcNow
+            },
+            new User
+            {
+                Id = 2,
+                Username = "tvshowlover",
+                Email = "tvshowlover@example.com",
+                Password = "password123",
+                CreatedAt = DateTime.UtcNow
+            },
+            new User
+            {
+                Id = 3,
+                Username = "criticalviewer",
+                Email = "criticalviewer@example.com",
+                Password = "watchingTV",
+                CreatedAt = DateTime.UtcNow
+            },
+            new User
+            {
+                Id = 4,
+                Username = "binge_watcher",
+                Email = "bingewatcher@example.com",
+                Password = "binge123",
+                CreatedAt = DateTime.UtcNow
+            }
+            );
     }
-
 }

@@ -1,4 +1,6 @@
 using System;
+using ReviewAPI.Models;
+using ShowAPI.Models;
 
 namespace UserAPI.Models;
 
@@ -9,4 +11,6 @@ public class User
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public ICollection<Review> Reviews { get; set; } = new List<Review>();
+    public ICollection<Show> Shows { get; set; } = new List<Show>();
 }
