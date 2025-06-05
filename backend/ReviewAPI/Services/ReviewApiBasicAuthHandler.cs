@@ -37,6 +37,7 @@ public class ReviewApiBasicAuthHandler : AuthenticationHandler<AuthenticationSch
             var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
             var credentials = Encoding.UTF8.GetString(credentialBytes).Split(':', 2);
             var securePassword = authHeader.Parameter;
+            //var securePassword = Encoding.UTF8.GetString(credentialBytes);
             var email = credentials[0];
             var password = credentials[1];
 
@@ -48,9 +49,9 @@ public class ReviewApiBasicAuthHandler : AuthenticationHandler<AuthenticationSch
             {
                 try
                 {
-                    var user = await db.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
-                    if (user == null)
-                    return AuthenticateResult.Fail("Invalid username or password");
+                    var user = await db.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == securePassword);
+                    //if (user == null)
+                    //return AuthenticateResult.Fail("Invalid username or password");
                 }
                 catch (Exception ex)
                 {

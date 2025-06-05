@@ -34,7 +34,7 @@ export const configureReviewApiWithBasicAuth = () => {
   apiInstance = axios.create({
     baseURL: 'http://localhost:5023',
   });
-
+ 
   apiInstance.interceptors.request.use(config => {
     const credentials = localStorage.getItem('basicAuth');
     if (credentials) {
