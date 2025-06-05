@@ -34,9 +34,9 @@ export const reviewAPI = {
     await api.delete(`/reviews/${id}`);
   },
 
-   registerUser: async (): Promise<User> => {
+   registerUser: async (user: User): Promise<User> => {
     const api = configureReviewApiWithBasicAuth();
-    const response = await api.post<User>(`/register`);
+    const response = await api.post<User>(`/register`, user);
     return response.data;
   },
 };

@@ -94,23 +94,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/init", (UserDbContext udb) =>
-{
-    User u = new User
-    {
-        Id = 1,
-        Username = "admin",
-        Email = "admin@mvonbehren.com",
-        Password = "password",
-        CreatedAt = DateTime.UtcNow
-    };
-    udb.Users.Add(u);
-    udb.SaveChanges();
-    udb.Database.ExecuteSqlRaw("PRAGMA wal_checkpoint;");
-
-    return Results.Ok(new { message = "API is running" });
-});
-
 // REVIEWS
 
 // GET - Get all reviews
@@ -217,5 +200,41 @@ app.MapDelete("/shows/{id}", async (int id, ShowDbContext db) =>
     return Results.NoContent();
 })
 .WithName("DeleteShow");
+
+// USERS
+
+// Initialize the UserDbContext and seed data
+app.MapGet("/init", (UserDbContext udb) =>
+{
+    User u = new User
+    {
+        Id = 1,
+        Username = "admin",
+        Email = "admin@mvonbehren.com",
+        Password = "password",
+        CreatedAt = DateTime.UtcNow
+    };
+    udb.Users.Add(u);
+    udb.SaveChanges();
+    udb.Database.ExecuteSqlRaw("PRAGMA wal_checkpoint;");
+
+    return Results.Ok(new { message = "API is running" });
+});
+
+// New User Registration API
+app.MapPost("/register", async (User user, UserDbContext udb) =>
+{
+    // Check if the user already exists
+    var existingUser = await udb.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+    if (existingUser != null)
+    {
+        return Results.BadRequest("User already exists.");
+    }
+
+    // Add the new user to the database
+    udb.Users.Add(user);
+    await udb.SaveChangesAsync();
+    return Results.Created($"/users/{user.Id}", user);
+});
 
 app.Run();
