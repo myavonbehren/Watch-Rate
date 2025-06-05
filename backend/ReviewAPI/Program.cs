@@ -218,6 +218,4 @@ app.MapDelete("/shows/{id}", async (int id, ShowDbContext db) =>
 })
 .WithName("DeleteShow");
 
-
-
 app.Run();

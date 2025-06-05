@@ -1,5 +1,6 @@
 //import axios from 'axios'
 import { type Review } from '../types/Review'
+import { type User } from '../types/User'
 import { configureReviewApiWithBasicAuth } from './authService';
 
 //const API_URL = 'http://localhost:5023'
@@ -31,5 +32,11 @@ export const reviewAPI = {
   delete: async (id: number): Promise<void> => {
     const api = configureReviewApiWithBasicAuth();
     await api.delete(`/reviews/${id}`);
-  }
+  },
+
+   registerUser: async (): Promise<User> => {
+    const api = configureReviewApiWithBasicAuth();
+    const response = await api.post<User>(`/register`);
+    return response.data;
+  },
 };
