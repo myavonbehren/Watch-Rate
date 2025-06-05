@@ -25,11 +25,6 @@ public class ReviewDbContext : DbContext
             .IsRequired()
             .HasMaxLength(1000);
 
-        modelBuilder.Entity<Review>()
-            .HasOne(r => r.User)
-            .WithMany(u => u.Reviews)
-            .HasForeignKey(r => r.UserId);
-
         // Seed data
         DateTime date1 = new DateTime(2025, 5, 28);
         DateTime date2 = new DateTime(2025, 6, 1);

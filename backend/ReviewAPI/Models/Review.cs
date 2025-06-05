@@ -16,6 +16,4 @@ public class Review
     public string Username { get; set; } = string.Empty;
     // Foreign key to User table
     public int UserId { get; set; } 
-    // Navigation property to User
-    public User User { get; set; } = null!; 
 }

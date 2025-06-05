@@ -66,16 +66,14 @@ var app = builder.Build();
 // Ensure database is created with seed data
 using (var scope = app.Services.CreateScope())
 {
+    var userDbContext = scope.ServiceProvider.GetRequiredService<UserDbContext>();
+    userDbContext.Database.EnsureCreated();
+
     var reviewDbContext = scope.ServiceProvider.GetRequiredService<ReviewDbContext>();
     reviewDbContext.Database.EnsureCreated();
 
     var showDbContext = scope.ServiceProvider.GetRequiredService<ShowDbContext>();
     showDbContext.Database.EnsureCreated();
-
-
-
-    var userDbContext = scope.ServiceProvider.GetRequiredService<UserDbContext>();
-    userDbContext.Database.EnsureCreated();
 }
 
 // Configure middleware
