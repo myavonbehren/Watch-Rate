@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Form, Button, Alert } from 'react-bootstrap';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { setBasicAuth } from '../services/authService';
+import { configureReviewApiWithBasicAuth, setBasicAuth } from '../services/authService';
 import { reviewAPI } from '../services/reviewAPI';
 
 interface LoginProps {
@@ -24,12 +24,13 @@ const Login: React.FC<LoginProps> = ({isNewUser}) => {
         setError('');
 
         try {
-            setBasicAuth(username, password);
+            setBasicAuth(email, password);
 
             // Test creds by making a request
-            await reviewAPI.getAll();
-
-            console.log("wait did it work?")
+            const api = configureReviewApiWithBasicAuth();
+            await api.get('/shows');
+            
+            //await reviewAPI.getAll();
 
             navigate('/watchlist');
 
@@ -45,11 +46,12 @@ const Login: React.FC<LoginProps> = ({isNewUser}) => {
 
     return (
         <Card className="p-0 shadow-sm border mx-auto" style={{width: '20rem'}}>
-            {error && <Alert variant='danger'>{error}</Alert>}
-
+            
             <Card.Header>{isNewUser ? 'Sign Up' : 'Login'}</Card.Header>
             <Card.Body>
+            {error && <Alert variant='danger' dismissible onClose={()=> setError('')}>{error}</Alert>}
             <Form onSubmit={handleSubmit}>
+                {isNewUser &&
                 <Form.Group className="mb-3" controlId="formName">
                 <Form.Label>Username</Form.Label>
                 <Form.Control
@@ -58,8 +60,7 @@ const Login: React.FC<LoginProps> = ({isNewUser}) => {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
-                </Form.Group>
-                {isNewUser &&
+                </Form.Group>}
                 <Form.Group className="mb-3" controlId="formEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
@@ -69,7 +70,6 @@ const Login: React.FC<LoginProps> = ({isNewUser}) => {
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 </Form.Group>
-                }
                 <Form.Group className="mb-3" controlId="formPassword">
                     <Form.Label>Password</Form.Label>
                     <Form.Control
@@ -80,9 +80,16 @@ const Login: React.FC<LoginProps> = ({isNewUser}) => {
                     />
                 </Form.Group>
                     <div className="d-grid gap-2">
+                    {isNewUser ? 
+                    <Button variant="warning" type="submit" disabled={loading}>
+                        {loading ? 'Signing up..' : 'Sign Up'}
+                    </Button>
+                    :
                     <Button variant="warning" type="submit" disabled={loading}>
                         {loading ? 'Logging in..' : 'Login'}
-                        </Button>
+                    </Button>
+                    }
+                    
                     </div>
             </Form>
             </Card.Body>

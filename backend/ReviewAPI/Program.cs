@@ -11,6 +11,7 @@ using ShowAPI.Models;
 using ReviewAPI.Data;
 using ShowAPI.Data;
 using ReviewAPI.Services;
+using UserAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,9 @@ builder.Services.AddDbContext<ReviewDbContext>(options =>
 builder.Services.AddDbContext<ShowDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection")));
 
+builder.Services.AddDbContext<UserDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("UserDbConnection")));
+
 // Configure basic authentication
 builder.Services.AddAuthentication("BasicAuthentication")
     .AddScheme<AuthenticationSchemeOptions, ReviewApiBasicAuthHandler>("BasicAuthentication", null);
@@ -62,14 +66,16 @@ var app = builder.Build();
 // Ensure database is created with seed data
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<ReviewDbContext>();
-    dbContext.Database.EnsureCreated();
-}
+    var reviewDbContext = scope.ServiceProvider.GetRequiredService<ReviewDbContext>();
+    reviewDbContext.Database.EnsureCreated();
 
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<ShowDbContext>();
-    dbContext.Database.EnsureCreated();
+    var showDbContext = scope.ServiceProvider.GetRequiredService<ShowDbContext>();
+    showDbContext.Database.EnsureCreated();
+
+
+
+    var userDbContext = scope.ServiceProvider.GetRequiredService<UserDbContext>();
+    userDbContext.Database.EnsureCreated();
 }
 
 // Configure middleware
@@ -87,6 +93,23 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapGet("/init", (UserDbContext udb) =>
+{
+    User u = new User
+    {
+        Id = 1,
+        Username = "admin",
+        Email = "admin@mvonbehren.com",
+        Password = "password",
+        CreatedAt = DateTime.UtcNow
+    };
+    udb.Users.Add(u);
+    udb.SaveChanges();
+    udb.Database.ExecuteSqlRaw("PRAGMA wal_checkpoint;");
+
+    return Results.Ok(new { message = "API is running" });
+});
 
 // REVIEWS
 
@@ -195,13 +218,6 @@ app.MapDelete("/shows/{id}", async (int id, ShowDbContext db) =>
 })
 .WithName("DeleteShow");
 
-// Add a protected route
-app.MapGet("/api/protected-reviws", (ClaimsPrincipal user) =>
-{
-    // Return the authenticated user's name or a simple message
-    return Results.Ok(new { message = $"Hello, {user.Identity?.Name ?? "authenticated user"}! This is a protected endpoint." });
-})
-.WithName("GetProtectedReviews")
-.RequireAuthorization();
+
 
 app.Run();
