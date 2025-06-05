@@ -3,4 +3,5 @@ export interface Show {
   username: string;
   title: string;
   isWatched: boolean;
+  userId?: number;
 }

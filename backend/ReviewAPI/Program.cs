@@ -200,25 +200,6 @@ app.MapDelete("/shows/{id}", async (int id, ShowDbContext db) =>
 .WithName("DeleteShow");
 
 // USERS
-
-// Initialize the UserDbContext and seed data
-app.MapGet("/init", (UserDbContext udb) =>
-{
-    User u = new User
-    {
-        Id = 1,
-        Username = "admin",
-        Email = "admin@mvonbehren.com",
-        Password = "password",
-        CreatedAt = DateTime.UtcNow
-    };
-    udb.Users.Add(u);
-    udb.SaveChanges();
-    udb.Database.ExecuteSqlRaw("PRAGMA wal_checkpoint;");
-
-    return Results.Ok(new { message = "API is running" });
-});
-
 // New User Registration API
 app.MapPost("/register", async (User user, UserDbContext udb) =>
 {
