@@ -38,6 +38,7 @@ export const reviewAPI = {
   },
 
   // SHOWS
+  
   // getAllShows: async (): Promise<Show[]> => {
   //   const api = configureReviewApiWithJwtAuth();
   //   const response = await api.get<Show[]>(`/shows`);

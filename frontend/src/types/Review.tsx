@@ -1,12 +1,13 @@
 export interface Review {
   id?: number;
-  username: string;
+  username?: string;
   title: string;
   content: string;
   rating: number;
   liked: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
+  userId?: number;
 }
 
 export interface ReviewListInterface {

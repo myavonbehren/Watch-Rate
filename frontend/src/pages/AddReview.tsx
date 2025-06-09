@@ -15,13 +15,10 @@ const AddReview = () => {
     const [saved, setSaved] = useState(false);
 
     const [review, setReview] = useState<Review>({
-        username: 'default user',
         title: '',
         content: '',
         rating: 0,
         liked: false,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
     });
 
     useEffect(() => {
