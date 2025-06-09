@@ -39,30 +39,30 @@ export const reviewAPI = {
 
   // SHOWS
   getAllShows: async (): Promise<Show[]> => {
-    const api = configureReviewApiWithBasicAuth();
+    const api = configureReviewApiWithJwtAuth();
     const response = await api.get<Show[]>(`/shows`);
     return response.data;
   },
   
   getShowById: async (id: number): Promise<Show> => {
-    const api = configureReviewApiWithBasicAuth();
+    const api = configureReviewApiWithJwtAuth();
     const response = await api.get<Show>(`/shows/${id}`);
     return response.data;
   },
 
   createShow: async (show: Show): Promise<Show> => {
-    const api = configureReviewApiWithBasicAuth();
+    const api = configureReviewApiWithJwtAuth();
     const response = await api.post<Show>(`/shows`, show);
     return response.data;
   },
 
   updateWatched: async (id: number, isWatched: boolean): Promise<void> => {
-    const api = configureReviewApiWithBasicAuth();
+    const api = configureReviewApiWithJwtAuth();
     await api.patch(`/shows/${id}/watched?isWatched=${isWatched}`);
   },
 
   deleteShow: async (id: number): Promise<void> => {
-    const api = configureReviewApiWithBasicAuth();
+    const api = configureReviewApiWithJwtAuth();
     await api.delete(`/shows/${id}`);
   },
 

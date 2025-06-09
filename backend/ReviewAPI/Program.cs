@@ -241,11 +241,23 @@ app.MapPost("/register", async (User user, UserDbContext udb) =>
 });
 
 // Auth endpoints
-app.MapPost("/login", (LoginRequest request) =>
+app.MapPost("/login", async (LoginRequest request, UserDbContext udb) =>
 {
-    // Demo implementation - in a real app, verify against database
-    if (request.Email != "admin@example.com" || request.Password != "password")
+    var user = await udb.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+
+    if (user == null) 
         return Results.Unauthorized();
+        
+    var expectedEncodedPassword = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{request.Email}:{request.Password}"));
+
+    // Check if the password matches the expected encoded password
+    // Checks hash password and seed plain password
+    if (user.Password != expectedEncodedPassword && user.Password != request.Password)
+        return Results.Unauthorized();
+    
+    // Demo implementation - in a real app, verify against database
+    // if (request.Email != "admin@example.com" || request.Password != "password")
+    //     return Results.Unauthorized();
 
     var tokenHandler = new JwtSecurityTokenHandler();
     var key = Encoding.UTF8.GetBytes("YourSuperSecretKeyForReviewApiThatIsLongEnough");
@@ -254,8 +266,11 @@ app.MapPost("/login", (LoginRequest request) =>
     {
         Subject = new ClaimsIdentity(new[]
         {
-            new Claim(ClaimTypes.Name, request.Email),
-            new Claim(ClaimTypes.Role, "Admin"),
+            new Claim(ClaimTypes.Name, user.Email),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim("username", user.Username ?? ""),
+            new Claim(ClaimTypes.Role, "User"),
+
         }),
         Expires = DateTime.UtcNow.AddHours(1),
         Issuer = "ReviewAPI",

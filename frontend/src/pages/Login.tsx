@@ -27,12 +27,16 @@ const Login: React.FC<LoginProps> = ({isNewUser}) => {
             // If new user, register the user
             if (isNewUser) {
                 //const creds = setBasicAuth(email, password);
+                console.log('Registering user:', { email, password, username });
+                //await reviewAPI.registerUser({ email, password, username });
                 await reviewAPI.registerUser({ email, password: setBasicAuth(email, password), username: username });
             }
 
             setBasicAuth(email, password);
 
             await reviewAPI.loginUser({ email, password });
+
+            reviewAPI.getAllShows();
 
             // Test creds by making a request
             //const api = configureReviewApiWithBasicAuth();
