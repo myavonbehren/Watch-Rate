@@ -9,13 +9,24 @@ interface ReviewItemProps {
 }
 
 const ReviewItem: React.FC<ReviewItemProps> = ({ review, deleteReview }) => {
+
+    const formatDate = (dateString: string | undefined) => {
+        if (!dateString) return 'N/A';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    };
+
     return (        
         <Card className="p-0 shadow-sm border mt-2" style={{ width: '20rem', maxWidth: '20rem'}}>
             <Card.Header className="bg-white">{review.username}</Card.Header>
             <Card.Body className="text-start">
                 <Row className="align-items-center">
                     <Col><CardTitle style={{fontSize: "1.2em"}}>{review.title}</CardTitle></Col>
-                    <Col className="text-end"><Card.Subtitle className="mb-2 text-muted">Date</Card.Subtitle></Col>
+                    <Col className="text-end"><Card.Subtitle className="mb-2 text-muted">{formatDate(review.createdAt || review.updatedAt)}</Card.Subtitle></Col>
                 </Row>
                 <Row className="mb-1">
                     <Col>
