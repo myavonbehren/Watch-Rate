@@ -151,9 +151,12 @@ app.MapPost("/reviews", async (Review review, HttpContext context, ReviewDbConte
 .WithName("AddReview").RequireAuthorization();
 
 // PUT - Update a review
-app.MapPut("/reviews/{id}", async (int id, Review updatedReview, ReviewDbContext db) =>
+app.MapPut("/reviews/{id}", async (int id, Review updatedReview, HttpContext context, ReviewDbContext db) =>
 {
-    var review = await db.Reviews.FindAsync(id);
+    var userId = int.Parse(context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+    var review = await db.Reviews.FirstOrDefaultAsync(r => r.Id == id && r.UserId == userId);
+
+    //var review = await db.Reviews.FindAsync(id);
     if (review == null) return Results.NotFound();
 
     review.Title = updatedReview.Title;
@@ -165,27 +168,23 @@ app.MapPut("/reviews/{id}", async (int id, Review updatedReview, ReviewDbContext
     await db.SaveChangesAsync();
     return Results.NoContent();
 })
-.WithName("UpdateReview");
+.WithName("UpdateReview").RequireAuthorization();
 
 // DELETE - Delete a review
-app.MapDelete("/reviews/{id}", async (int id, ReviewDbContext db) =>
+app.MapDelete("/reviews/{id}", async (int id, HttpContext context, ReviewDbContext db) =>
 {
-    var review = await db.Reviews.FindAsync(id);
+    var userId = int.Parse(context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+    var review = await db.Reviews.FirstOrDefaultAsync(r => r.Id == id && r.UserId == userId);
+    
     if (review == null) return Results.NotFound();
 
     db.Reviews.Remove(review);
     await db.SaveChangesAsync();
     return Results.NoContent();
 })
-.WithName("DeleteReview");
+.WithName("DeleteReview").RequireAuthorization();;
 
 // SHOWS
-
-// GET - Get all shows
-// app.MapGet("/shows", async (HttpContext context, ShowDbContext db) =>
-//     await db.Shows.ToListAsync())
-// .WithName("GetAllShows").RequireAuthorization();
-
 app.MapGet("/shows", async (HttpContext context, ShowDbContext db) =>
 {
     var userId = int.Parse(context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
@@ -202,31 +201,43 @@ app.MapGet("/shows/{id}", async (int id, ShowDbContext db) =>
 .WithName("GetShowById");
 
 // POST - Add a new show
-app.MapPost("/shows", async (Show show, ShowDbContext db) =>
+app.MapPost("/shows", async (Show show, HttpContext context, ShowDbContext db) =>
 {
+    var userId = int.Parse(context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+    var username = context.User.FindFirst("username")?.Value ?? "";
+
+    show.UserId = userId;
+    show.Username = username;
+
     db.Shows.Add(show);
 
     await db.SaveChangesAsync();
     return Results.Created($"/shows/{show.Id}", show);
 })
-.WithName("AddShow");
+.WithName("AddShow").RequireAuthorization();
 
 // PATCH - Update isWatched
-app.MapPatch("/shows/{id}/watched", async (int id, bool isWatched, ShowDbContext db) =>
+app.MapPatch("/shows/{id}/watched", async (int id, bool isWatched, HttpContext context, ShowDbContext db) =>
 {
-    var show = await db.Shows.FindAsync(id);
+    var userId = int.Parse(context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+    var show = await db.Shows.FirstOrDefaultAsync(s => s.Id == id && s.UserId == userId);
+
+    //var show = await db.Shows.FindAsync(id);
     if (show == null) return Results.NotFound();
     
     show.isWatched = isWatched;
     await db.SaveChangesAsync();
     return Results.NoContent();
 })
-.WithName("UpdateWatched");
+.WithName("UpdateWatched").RequireAuthorization();
 
 // DELETE - Delete a show
-app.MapDelete("/shows/{id}", async (int id, ShowDbContext db) =>
+app.MapDelete("/shows/{id}", async (int id, HttpContext context, ShowDbContext db) =>
 {
-    var show = await db.Shows.FindAsync(id);
+    var userId = int.Parse(context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+    var show = await db.Shows.FirstOrDefaultAsync(s => s.Id == id && s.UserId == userId);
+
+    //var show = await db.Shows.FindAsync(id);
     if (show == null) return Results.NotFound();
 
     db.Shows.Remove(show);
