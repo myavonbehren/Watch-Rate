@@ -32,9 +32,11 @@ const Login: React.FC<LoginProps> = ({isNewUser}) => {
 
             setBasicAuth(email, password);
 
+            await reviewAPI.loginUser({ email, password });
+
             // Test creds by making a request
-            const api = configureReviewApiWithBasicAuth();
-            await api.get('/shows');
+            //const api = configureReviewApiWithBasicAuth();
+            //await api.get('/shows');
             
             //await reviewAPI.getAll();
 

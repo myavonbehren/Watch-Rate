@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import AddShow from '../components/AddShow';
 import ShowList from '../components/ShowList';
-import { showAPI } from '../services/showAPI';
+import { reviewAPI } from '../services/reviewAPI';
 import { type Show } from '../types/Show';
 import { Alert, Spinner } from 'react-bootstrap';
 
@@ -13,7 +13,7 @@ const Watchlist: React.FC = () => {
     useEffect(() => {
         const fetchShows = async () => {
             try {
-                const data = await showAPI.getAll();
+                const data = await reviewAPI.getAllShows();
                 setShows(data);
                 setLoading(false);
             } catch (err) {
@@ -31,7 +31,7 @@ const Watchlist: React.FC = () => {
         const newState = !currentState;
         try {
             console.log('before the await')
-            await showAPI.updateWatched(id, newState);
+            await reviewAPI.updateWatched(id, newState);
             console.log('after the await')
             setShows(shows.map(show => 
                 show.id === id ? { ...show, isWatched: newState } : show
@@ -44,7 +44,7 @@ const Watchlist: React.FC = () => {
     const createShow = async (newShow: Show) => {
         setLoading(true);
         try {
-            const createdShow = await showAPI.create(newShow);
+            const createdShow = await reviewAPI.createShow(newShow);
             setShows(prevShows => [...prevShows, createdShow]);
             setLoading(false);
         } catch (err) {
@@ -56,7 +56,7 @@ const Watchlist: React.FC = () => {
     const deleteShow = async (id: number) => {
         if (window.confirm('Are you sure you want to delete this show?')) {
             try {
-                await showAPI.delete(id);
+                await reviewAPI.deleteShow(id);
                 setShows(shows.filter(show => show.id != id));
             } catch (err) {
                 console.error('Error deleting show: ', err)

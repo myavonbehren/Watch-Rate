@@ -241,7 +241,7 @@ app.MapPost("/register", async (User user, UserDbContext udb) =>
 });
 
 // Auth endpoints
-app.MapPost("/auth/login", (LoginRequest request) =>
+app.MapPost("/login", (LoginRequest request) =>
 {
     // Demo implementation - in a real app, verify against database
     if (request.Email != "admin@example.com" || request.Password != "password")

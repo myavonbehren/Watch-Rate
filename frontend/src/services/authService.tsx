@@ -54,7 +54,7 @@ export const configureReviewApiWithJwtAuth = () => {
   
   // Create new instance if none exists
   apiInstance = axios.create({
-    baseURL: 'http://localhost:5023/api',
+    baseURL: 'http://localhost:5023',
   });
 
   apiInstance.interceptors.request.use(config => {
