@@ -36,7 +36,7 @@ const Login: React.FC<LoginProps> = ({isNewUser}) => {
 
             await reviewAPI.loginUser({ email, password });
 
-            reviewAPI.getAllShows();
+            reviewAPI.getUserShows();
 
             // Test creds by making a request
             //const api = configureReviewApiWithBasicAuth();

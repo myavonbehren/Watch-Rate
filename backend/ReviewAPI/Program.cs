@@ -13,6 +13,7 @@ using ReviewAPI.Data;
 using ShowAPI.Data;
 using ReviewAPI.Services;
 using UserAPI.Models;
+using Microsoft.VisualBasic;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -132,8 +133,13 @@ app.MapGet("/reviews/{id}", async (int id, ReviewDbContext db) =>
 .WithName("GetReviewById");
 
 // POST - Add a new review
-app.MapPost("/reviews", async (Review review, ReviewDbContext db) =>
+app.MapPost("/reviews", async (Review review, HttpContext context, ReviewDbContext db) =>
 {
+    var userId = int.Parse(context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+    var username = context.User.FindFirst("username")?.Value ?? "";
+
+    review.UserId = userId;
+    review.Username = username;
     review.CreatedAt = DateTime.UtcNow;
     review.UpdatedAt = DateTime.UtcNow;
 
@@ -142,7 +148,7 @@ app.MapPost("/reviews", async (Review review, ReviewDbContext db) =>
     await db.SaveChangesAsync();
     return Results.Created($"/reviews/{review.Id}", review);
 })
-.WithName("AddReview");
+.WithName("AddReview").RequireAuthorization();
 
 // PUT - Update a review
 app.MapPut("/reviews/{id}", async (int id, Review updatedReview, ReviewDbContext db) =>
@@ -176,10 +182,16 @@ app.MapDelete("/reviews/{id}", async (int id, ReviewDbContext db) =>
 // SHOWS
 
 // GET - Get all shows
-app.MapGet("/shows", async (ShowDbContext db) =>
-    await db.Shows.ToListAsync())
-.WithName("GetAllShows").RequireAuthorization();
+// app.MapGet("/shows", async (HttpContext context, ShowDbContext db) =>
+//     await db.Shows.ToListAsync())
+// .WithName("GetAllShows").RequireAuthorization();
 
+app.MapGet("/shows", async (HttpContext context, ShowDbContext db) =>
+{
+    var userId = int.Parse(context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+    return await db.Shows.Where(s => s.UserId == userId).ToListAsync();
+})
+.WithName("GetUserShows").RequireAuthorization();
 
 // GET - Get a specific show by ID
 app.MapGet("/shows/{id}", async (int id, ShowDbContext db) =>

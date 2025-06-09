@@ -13,7 +13,7 @@ const Watchlist: React.FC = () => {
     useEffect(() => {
         const fetchShows = async () => {
             try {
-                const data = await reviewAPI.getAllShows();
+                const data = await reviewAPI.getUserShows();
                 setShows(data);
                 setLoading(false);
             } catch (err) {

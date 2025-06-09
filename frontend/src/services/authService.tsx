@@ -3,7 +3,7 @@ import type { UserClaims } from '../types/UserClaims';
 import { jwtDecode } from 'jwt-decode';
 
 // Store a single instance of the authenticated API
-let apiInstance: AxiosInstance | null = null;
+//let apiInstance: AxiosInstance | null = null;
 
 // Basic auth helper for Review
 export const setBasicAuth = (username: string, password: string) => {
@@ -11,7 +11,7 @@ export const setBasicAuth = (username: string, password: string) => {
   localStorage.setItem('basicAuth', credentials);
   
   // Reset the API instance when credentials change
-  apiInstance = null;
+  //apiInstance = null;
   
   return credentials;
 };
@@ -19,7 +19,9 @@ export const setBasicAuth = (username: string, password: string) => {
 // Clear authentication on logout
 export const clearAuth = () => {
   localStorage.removeItem('basicAuth');
-  apiInstance = null;
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+  //apiInstance = null;
 };
 
 // Check if user is authenticated
@@ -29,13 +31,17 @@ export const isAuthenticated = () => {
 
 // Get a configured API instance with Basic Auth
 export const configureReviewApiWithBasicAuth = () => {
-  // Return existing instance if available
-  if (apiInstance) return apiInstance;
-  
-  // Create new instance if none exists
-  apiInstance = axios.create({
+  const apiInstance = axios.create({
     baseURL: 'http://localhost:5023',
   });
+
+  // Return existing instance if available
+  //if (apiInstance) return apiInstance;
+  
+  // Create new instance if none exists
+  // apiInstance = axios.create({
+  //   baseURL: 'http://localhost:5023',
+  // });
  
   apiInstance.interceptors.request.use(config => {
     const credentials = localStorage.getItem('basicAuth');
@@ -50,10 +56,10 @@ export const configureReviewApiWithBasicAuth = () => {
 
 export const configureReviewApiWithJwtAuth = () => {
   // Return existing instance if available
-  if (apiInstance) return apiInstance;
+  //if (apiInstance) return apiInstance;
   
   // Create new instance if none exists
-  apiInstance = axios.create({
+  const apiInstance = axios.create({
     baseURL: 'http://localhost:5023',
   });
 
