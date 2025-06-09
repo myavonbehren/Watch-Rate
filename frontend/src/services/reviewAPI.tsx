@@ -1,4 +1,5 @@
 //import axios from 'axios'
+import type { AuthTokens } from '../types/AuthTokens';
 import { type Review } from '../types/Review'
 import { type User } from '../types/User'
 import { configureReviewApiWithBasicAuth } from './authService';
@@ -39,4 +40,13 @@ export const reviewAPI = {
     const response = await api.post<User>(`/register`, user);
     return response.data;
   },
+
+   loginUser: async (user: User): Promise<boolean> => {
+    const api = configureReviewApiWithBasicAuth();
+    const tokens: AuthTokens = await api.post<AuthTokens>(`/login`, user);//await response.json();
+    localStorage.setItem('accessToken', tokens.data.accessToken);
+    localStorage.setItem('refreshToken', tokens.data.refreshToken);
+    return true;
+   }
+ 
 };
