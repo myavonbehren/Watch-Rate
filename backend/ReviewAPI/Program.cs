@@ -1,10 +1,11 @@
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using System.Net.Http.Headers;
-using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
 
 using ReviewAPI.Models;
 using ShowAPI.Models;
@@ -35,6 +36,27 @@ builder.Services.AddSwaggerGen(c =>
 }
 );
 
+// Add JWT authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = "ReviewAPI",
+        ValidAudience = "ReviewUsers",
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes("YourSuperSecretKeyForReviewApiThatIsLongEnough"))
+    };
+});
+
 // Add EF Core to the container
 builder.Services.AddDbContext<ReviewDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection")));
@@ -60,6 +82,8 @@ builder.Services.AddAuthorization(options =>
 
 // Add services
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddAuthorization();
+
 
 var app = builder.Build();
 
@@ -214,6 +238,40 @@ app.MapPost("/register", async (User user, UserDbContext udb) =>
     udb.Users.Add(user);
     await udb.SaveChangesAsync();
     return Results.Created($"/users/{user.Id}", user);
+});
+
+// Auth endpoints
+app.MapPost("/auth/login", (LoginRequest request) =>
+{
+    // Demo implementation - in a real app, verify against database
+    if (request.Email != "admin@example.com" || request.Password != "password")
+        return Results.Unauthorized();
+
+    var tokenHandler = new JwtSecurityTokenHandler();
+    var key = Encoding.UTF8.GetBytes("YourSuperSecretKeyForReviewApiThatIsLongEnough");
+    
+    var tokenDescriptor = new SecurityTokenDescriptor
+    {
+        Subject = new ClaimsIdentity(new[]
+        {
+            new Claim(ClaimTypes.Name, request.Email),
+            new Claim(ClaimTypes.Role, "Admin"),
+        }),
+        Expires = DateTime.UtcNow.AddHours(1),
+        Issuer = "ReviewAPI",
+        Audience = "ReviewUsers",
+        SigningCredentials = new SigningCredentials(
+            new SymmetricSecurityKey(key), 
+            SecurityAlgorithms.HmacSha256Signature)
+    };
+    
+    var token = tokenHandler.CreateToken(tokenDescriptor);
+    
+    return Results.Ok(new
+    {
+        accessToken = tokenHandler.WriteToken(token),
+        refreshToken = Convert.ToBase64String(Guid.NewGuid().ToByteArray())
+    });
 });
 
 app.Run();
