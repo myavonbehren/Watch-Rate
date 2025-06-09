@@ -2,6 +2,7 @@ import { type Review } from '../types/Review'
 import { Button, Card, CardTitle, Row, Col, Stack} from 'react-bootstrap';
 import StarRating from "./StarRating";
 import LikeButton from "./LikeButton";
+import { getUser } from '../services/authService';
 
 interface ReviewItemProps {
     review: Review;
@@ -9,6 +10,8 @@ interface ReviewItemProps {
 }
 
 const ReviewItem: React.FC<ReviewItemProps> = ({ review, deleteReview }) => {
+    const currentUser = getUser();
+    const isOwner = currentUser && review.userId === parseInt(currentUser.nameid); 
 
     const formatDate = (dateString: string | undefined) => {
         if (!dateString) return 'N/A';
@@ -40,12 +43,14 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ review, deleteReview }) => {
                 <Card.Text>{review.content}</Card.Text>
                 
             </Card.Body> 
+            {isOwner && (
             <Card.Footer className="d-flex justify-content-end" style={{ backgroundColor: '#f8f9fa' }}>
                 <Stack direction="horizontal" gap={2}>
                     <Card.Link href={`/edit/${review.id}`}><Button variant="outline-dark" size="sm"> Edit </Button></Card.Link>
                     <Button variant="danger" size="sm" onClick={() => review.id && deleteReview(review.id)}> Delete </Button>
                 </Stack>
             </Card.Footer>
+            )}
         </Card>
     );
 };

@@ -3,4 +3,6 @@ export interface UserClaims {
     name: string;
     email: string;
     exp: number;
+    nameid: string;
+    username?: string;
 }
