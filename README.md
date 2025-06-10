@@ -4,6 +4,9 @@
 # Watch&Rate – Web Development Final Project
 ### By Mya Von Behren
 
+### Demo
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/PK2TY4qF_6Q/0.jpg)](https://www.youtube.com/watch?v=PK2TY4qF_6Q)
+
 ### Overview
 Watch%Rate is a web application that is a social TV show review platform that allows users to create accounts and share their viewing experiences. Users can write detailed reviews of TV shows they've watched, rate them on a five-star scale, and mark their favorites with a like button. The application includes full CRUD functionality where users can create, edit, and delete their own reviews while viewing public reviews from other users. Additionally, users have a personal watchlist to track shows they've seen or want to watch, with the ability to add shows, toggle their watched status, and remove items from their list. 
 
