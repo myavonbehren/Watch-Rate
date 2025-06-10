@@ -2,7 +2,7 @@
 [![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-2972f46106e565e64193e422d61a12cf1da4916b45550586e14ef0a7c637dd04.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=19474506)
 
 # Watch&Rate – Web Development Final Project
-### By Mya Von Behren
+## By Mya Von Behren
 
 ### Demo
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/PK2TY4qF_6Q/0.jpg)](https://www.youtube.com/watch?v=PK2TY4qF_6Q)
