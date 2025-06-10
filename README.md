@@ -17,7 +17,7 @@ The frontend uses React and Bootstrap. The application features user authenticat
 The backend uses ASP.NET Core Minimal API with Entity Framework Core for database operation and provides comprehensive CRUD functionality for both reviews and watchlist items. Authentication is implemented using JWT tokens and basic OAuth, ensuring that users can only modify their content while allowing public read access to all reviews, regardless of whether a user is signed in or not. The API includes dedicated endpoints for reviews (GET, POST, PUT, DELETE) and watchlist management (GET, POST, PATCH for watch status, DELETE), with automatic user assignment and ownership validation.
 
 ### Login and Sign Up
-The application implements a dual authentication system where users can initially sign up and log in using basic autherntication (username/password), which then return JWT access and refresh tokens for subsequent API requests. Once authenticated, all protected endpoints use JWT Bearer token authentication to verify user identity and ensure users can only access and modify their own content.
+The application implements a dual authentication system where users can initially sign up and log in using basic autherntication (username/password), which then returns JWT access and refresh tokens for subsequent API requests. Once authenticated, all protected endpoints use JWT Bearer token authentication to verify user identity and ensure users can only access and modify their own content.
 
 ### Pages
 The application has four main pages that provide a complete user experience for TV show reviews and watchlist management:
