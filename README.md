@@ -5,6 +5,7 @@
 ### By Mya Von Behren
 
 ### Demo
+Click on image to watch YouTube vidoe.
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/PK2TY4qF_6Q/0.jpg)](https://www.youtube.com/watch?v=PK2TY4qF_6Q)
 
 ### Overview
