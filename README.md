@@ -27,7 +27,7 @@ A social TV show review platform built with React, TypeScript, and ASP.NET Core 
 * Modular component architecture
 * Client-side routing with React Router
 
-## Technical Stack
+## Tech Stack
 * Frontend: React, TypeScript, Bootstrap, React Router
 * Backend: ASP.NET Core Minimal API, Entity Framework Core
 * Authentication: JWT tokens, OAuth
