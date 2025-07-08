@@ -75,9 +75,10 @@ export const reviewAPI = {
 
    loginUser: async (user: User): Promise<boolean> => {
     const api = configureReviewApiWithBasicAuth();
-    const tokens: AuthTokens = await api.post<AuthTokens>(`/login`, user);//await response.json();
-    localStorage.setItem('accessToken', tokens.data.accessToken);
-    localStorage.setItem('refreshToken', tokens.data.refreshToken);
+    const response = await api.post<AuthTokens>(`/login`, user);
+    //const tokens: AuthTokens = await api.post<AuthTokens>(`/login`, user);//await response.json();
+    localStorage.setItem('accessToken', response.data.accessToken);
+    localStorage.setItem('refreshToken', response.data.refreshToken);
     return true;
    }  
  
