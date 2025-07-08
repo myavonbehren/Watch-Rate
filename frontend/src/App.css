@@ -46,3 +46,22 @@
 .read-the-docs {
   color: #888;
 }
+
+@media (max-width: 575px) {
+    .responsive-button-group {
+        flex-direction: column !important;
+    }
+    .responsive-toggle-btn {
+        width: 100% !important;
+        flex: none !important;
+    }
+}
+
+@media (min-width: 576px) {
+    .responsive-button-group {
+        display: flex !important;
+    }
+    .responsive-toggle-btn {
+        flex: 1 !important;
+    }
+}

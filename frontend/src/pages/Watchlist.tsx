@@ -3,7 +3,8 @@ import AddShow from '../components/AddShow';
 import ShowList from '../components/ShowList';
 import { reviewAPI } from '../services/reviewAPI';
 import { type Show } from '../types/Show';
-import { Alert, Spinner } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
+import '../App.css';
 
 const Watchlist: React.FC = () => {
     const [shows, setShows] = useState<Show[]>([]);
@@ -67,36 +68,12 @@ const Watchlist: React.FC = () => {
     
 
     return (
-    <div className="container">
+        <div className='container-fluid'>
         <h1 className='mb-4'>Watchlist</h1>
-            {error && (
-                <Alert 
-                variant="danger"
-                dismissible
-                onClose={()=> setError('')}
-                > Error: {error} </Alert>
-        )}
-
-        <div className="mb-4 d-block d-sm-none text-center">
-            <AddShow addShow={createShow}/>
-        </div>
-    
-
-        <div className="d-none d-sm-flex flex-wrap gap-4 justify-content-center">
-            <div className='flex-shrink-0'>
-                <AddShow addShow={createShow}/>
-            </div>
-            <div className="flex-grow-1" style={{ minWidth: '0' }}>
-                <ShowList
-                shows={shows}
-                toggleWatched={updateWatched}
-                deleteShow={deleteShow}
-                />
-            </div>
-        </div>
-    
-
-        <div className="d-block d-sm-none">
+        
+        <AddShow addShow={createShow}/>
+        
+        <div className="mt-4">
             <ShowList
             shows={shows}
             toggleWatched={updateWatched}
@@ -104,6 +81,6 @@ const Watchlist: React.FC = () => {
             />
         </div>
     </div>
-    );
+);
 };
 export default Watchlist;

@@ -56,7 +56,7 @@ const AddShow: React.FC<AddShowProps> = ({ addShow }) => {
     //if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
     
     return (
-<Card className="p-0 shadow-sm border mx-auto w-100" style={{maxWidth: '20rem'}}>
+<Card className="p-0 shadow-sm border mx-auto" style={{ width: 'calc(95vw - 3rem)', maxWidth: '40rem' }}>
         <CardHeader>Add Show</CardHeader>
         <Card.Body>
         <Form onSubmit={handleSubmit} className="text-start">
@@ -71,8 +71,9 @@ const AddShow: React.FC<AddShowProps> = ({ addShow }) => {
                     isInvalid={saved && !show.title}
                     required/>
             </Form.Group>
-            <div className="d-grid gap-2">
-            <ButtonGroup className="mb-2">
+
+        <div className="mb-2">
+            <ButtonGroup className="w-100 responsive-button-group">
                 {radios.map((radio, idx) => (
                 <ToggleButton
                     key={idx}
@@ -83,13 +84,14 @@ const AddShow: React.FC<AddShowProps> = ({ addShow }) => {
                     value={radio.value}
                     checked={radioValue === radio.value}
                     onChange={(e) => handleWatchedToggle(e.currentTarget.value)}
+                    className="responsive-toggle-btn"
                 >
                     {radio.name}
                 </ToggleButton>
-                
                 ))}
             </ButtonGroup>
-            </div>
+        </div>
+        
             <div className="d-grid gap-2">
             <Button 
             variant='dark' 
