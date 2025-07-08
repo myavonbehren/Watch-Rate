@@ -1,7 +1,8 @@
 # Watch&Rate
 A social TV show review platform built with React, TypeScript, and ASP.NET Core that allows users to create accounts, write detailed reviews, and manage personal watchlists.
+[Live Demo](https://watch-rate.vercel.app/)
 
-## Demo
+## Video Demo
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/PK2TY4qF_6Q/0.jpg)](https://www.youtube.com/watch?v=PK2TY4qF_6Q)
 
 ## Features
