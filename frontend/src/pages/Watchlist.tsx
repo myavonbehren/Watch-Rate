@@ -3,7 +3,7 @@ import AddShow from '../components/AddShow';
 import ShowList from '../components/ShowList';
 import { reviewAPI } from '../services/reviewAPI';
 import { type Show } from '../types/Show';
-import { Spinner } from 'react-bootstrap';
+import { Alert, Spinner } from 'react-bootstrap';
 import '../App.css';
 
 const Watchlist: React.FC = () => {
@@ -64,7 +64,7 @@ const Watchlist: React.FC = () => {
     };
 
     if (loading) return <Spinner animation="border" variant="warning" role="status"> <span className="visually-hidden">Loading...</span> </Spinner>
-    // if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
+     if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
     
 
     return (
