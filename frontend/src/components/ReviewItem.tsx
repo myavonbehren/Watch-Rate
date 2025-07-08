@@ -24,7 +24,7 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ review, deleteReview }) => {
     };
 
     return (        
-        <Card className="p-0 shadow-sm border mt-2" style={{ width: '20rem', maxWidth: '20rem'}}>
+    <Card className="p-0 shadow-sm border mt-2" style={{ width: 'min(20rem, calc(100vw - 2rem))', maxWidth: '20rem'}}>
             <Card.Header className="bg-white">{review.username}</Card.Header>
             <Card.Body className="text-start">
                 <Row className="align-items-center">

@@ -56,7 +56,7 @@ const AddShow: React.FC<AddShowProps> = ({ addShow }) => {
     //if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
     
     return (
-    <Card className="p-0 shadow-sm border mx-auto" style={{width: '20rem'}}>
+<Card className="p-0 shadow-sm border mx-auto w-100" style={{maxWidth: '20rem'}}>
         <CardHeader>Add Show</CardHeader>
         <Card.Body>
         <Form onSubmit={handleSubmit} className="text-start">

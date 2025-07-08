@@ -10,6 +10,7 @@ interface ShowListProps {
 const ShowList: React.FC<ShowListProps> = ({ shows, toggleWatched, deleteShow}) => {
     // console.log('ShowList component rendered with shows:', shows);
     return (
+        <div className='table-responsive'>
         <table className="table table-striped">
             <thead className="table-dark">
                 <tr>
@@ -42,6 +43,7 @@ const ShowList: React.FC<ShowListProps> = ({ shows, toggleWatched, deleteShow}) 
                 ))}
             </tbody>
         </table>
+        </div>
     );
 };
 

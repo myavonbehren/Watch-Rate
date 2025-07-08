@@ -39,7 +39,7 @@ const ReviewList = () => {
     //if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
 
     return (        
-        <div className="container-fluid">
+        <div>
             {error && (
                 <Alert 
                 variant="danger"
