@@ -9,6 +9,7 @@ const HomeNav: React.FC = () => {
 
   const handleLogout = () => {
     clearAuth();
+    window.location.reload();
     navigate('/');
   };
 
@@ -29,31 +30,27 @@ const HomeNav: React.FC = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto align-items-center">
-              <Nav.Link href="/"> Home </Nav.Link>
+              <Nav.Link href="/">Home</Nav.Link>
               {isAuthenticated() && (
                 <>
-                <Nav.Link href="/add"> Write a Review </Nav.Link>
-                <Nav.Link href="/watchlist"> Watchlist </Nav.Link>
+                <Nav.Link href="/add">Write a Review</Nav.Link>
+                <Nav.Link href="/watchlist">Watchlist</Nav.Link>
               </>
               )}
 
               { !isAuthenticated() ? (
                 <>
                   <Nav.Link href="/login">
-                    <Button variant="outline-dark" size="sm"> Login </Button>
+                    <Button variant="outline-dark" size="sm">Login</Button>
                   </Nav.Link>
                   <Nav.Link href="/signup">
-                    <Button variant="dark" size="sm"> Sign Up </Button>
+                    <Button variant="dark" size="sm">Sign Up</Button>
                   </Nav.Link>
                 </>
               ) : (
                 <>
-                  <Navbar.Text className="me-3">
-                    {currentUser?.username || currentUser?.name}
-                  </Navbar.Text>
-                  <Button variant="dark" size="sm" onClick={handleLogout}>
-                    Logout
-                  </Button>
+                  <Navbar.Text className="me-3">{currentUser?.username || currentUser?.name}</Navbar.Text>
+                  <Button variant="dark" size="sm" onClick={handleLogout}>Logout</Button>
                 </>
               )}
               
