@@ -31,10 +31,10 @@ export const isAuthenticated = () => {
 
 // Get a configured API instance with Basic Auth
 export const configureReviewApiWithBasicAuth = () => {
-  console.log('API URL:', process.env.REACT_APP_API_URL || 'http://watch-rate-b4efc4hcfkedcqbh.eastus-01.azurewebsites.net');
+  console.log('API URL:', process.env.REACT_APP_API_URL || 'https://watch-rate-b4efc4hcfkedcqbh.eastus-01.azurewebsites.net');
   const apiInstance = axios.create({
     // baseURL: 'http://localhost:5023',
-    baseURL: process.env.REACT_APP_API_URL || 'http://watch-rate-b4efc4hcfkedcqbh.eastus-01.azurewebsites.net',
+    baseURL: process.env.REACT_APP_API_URL || 'https://watch-rate-b4efc4hcfkedcqbh.eastus-01.azurewebsites.net',
   });
 
   // Return existing instance if available
@@ -63,7 +63,7 @@ export const configureReviewApiWithJwtAuth = () => {
   // Create new instance if none exists
   const apiInstance = axios.create({
     // baseURL: 'http://localhost:5023',
-    baseURL: process.env.REACT_APP_API_URL || 'http://watch-rate-b4efc4hcfkedcqbh.eastus-01.azurewebsites.net',
+    baseURL: process.env.REACT_APP_API_URL || 'https://watch-rate-b4efc4hcfkedcqbh.eastus-01.azurewebsites.net',
   });
 
   apiInstance.interceptors.request.use(config => {
