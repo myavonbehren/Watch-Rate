@@ -30,9 +30,7 @@ const Watchlist: React.FC = () => {
     const updateWatched = async (id: number, currentState: boolean) => {
         const newState = !currentState;
         try {
-            console.log('before the await')
             await reviewAPI.updateWatched(id, newState);
-            console.log('after the await')
             setShows(shows.map(show => 
                 show.id === id ? { ...show, isWatched: newState } : show
             ));

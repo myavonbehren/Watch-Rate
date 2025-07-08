@@ -8,7 +8,7 @@ interface ShowListProps {
 }
 
 const ShowList: React.FC<ShowListProps> = ({ shows, toggleWatched, deleteShow}) => {
-    console.log('ShowList component rendered with shows:', shows);
+    // console.log('ShowList component rendered with shows:', shows);
     return (
         <table className="table table-striped">
             <thead className="table-dark">
