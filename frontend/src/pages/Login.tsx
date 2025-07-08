@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Form, Button, Alert } from 'react-bootstrap';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
  import { setBasicAuth } from '../services/authService';
 import { reviewAPI } from '../services/reviewAPI';
 
@@ -16,7 +16,7 @@ const Login: React.FC<LoginProps> = ({isNewUser}) => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
