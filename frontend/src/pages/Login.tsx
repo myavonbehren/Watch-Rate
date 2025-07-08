@@ -43,8 +43,9 @@ const Login: React.FC<LoginProps> = ({isNewUser}) => {
             //await api.get('/shows');
             
             //await reviewAPI.getAll();
+            window.location.href = '/watchlist';
 
-            navigate('/watchlist');
+            //navigate('/watchlist');
 
         } catch (err) {
             // Clear invalid credentials on failureAdd commentMore actions
