@@ -1,16 +1,17 @@
 import React from 'react';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import { isAuthenticated, clearAuth, getUser } from '../services/authService';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 
 const HomeNav: React.FC = () => {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const currentUser = getUser();
 
   const handleLogout = () => {
     clearAuth();
-    window.location.reload();
-    navigate('/');
+    window.location.href = '/';
+    //window.location.reload();
+    //navigate('/');
   };
 
   return (
