@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Form, Button, Alert } from 'react-bootstrap';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { configureReviewApiWithBasicAuth, setBasicAuth } from '../services/authService';
+ import { setBasicAuth } from '../services/authService';
 import { reviewAPI } from '../services/reviewAPI';
 
 interface LoginProps {

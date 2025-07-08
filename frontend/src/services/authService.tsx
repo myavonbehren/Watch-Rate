@@ -1,4 +1,4 @@
-import axios, { type AxiosInstance } from 'axios';
+import axios from 'axios'
 import type { UserClaims } from '../types/UserClaims';
 import { jwtDecode } from 'jwt-decode';
 
