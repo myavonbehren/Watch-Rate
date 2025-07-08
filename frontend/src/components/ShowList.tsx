@@ -7,36 +7,51 @@ interface ShowListProps {
   deleteShow: (id: number) => void;
 }
 
+
 const ShowList: React.FC<ShowListProps> = ({ shows, toggleWatched, deleteShow}) => {
     // console.log('ShowList component rendered with shows:', shows);
     return (
   <>
-    {/* Card layout for mobile (below 576px) */}
-    <div className="d-block d-sm-none">
-      {shows.map(show => (
-        <div key={show.id} className="card mb-3">
-          <div className="card-body">
-            <h6 className="card-title">{show.title}</h6>
-            <div className="d-flex justify-content-between align-items-center">
-              <Button 
-                variant={show.isWatched ? 'warning' : 'dark'} 
-                size='sm'
-                onClick={() => show.id && toggleWatched(show.id, show.isWatched)}>
-                  {show.isWatched ? 'Watched' : 'Unwatched'}
-              </Button>
-              <Button 
-                variant='danger' 
-                size='sm' 
-                onClick={() => show.id && deleteShow(show.id)}>
-                  Delete
-              </Button>
+      <div className="d-block d-sm-none">
+        {shows.map(show => (
+          <div key={show.id} className="card mb-2 p-1">
+            <div className="card-body">
+
+              <div className="text-center">
+                <small className="text-muted fw-bold d-block">Show Name</small>
+                <div className="fw-bold mb-3" style={{fontSize: '1.1rem'}}>{show.title}</div>
+              </div>
+              
+
+              <hr className="my-2" />
+              
+              <div className="row text-center g-2">
+                <div className="col-6">
+                  <small className="fw-bold text-muted d-block mb-2">Status</small>
+                  <Button 
+                    variant={show.isWatched ? 'warning' : 'dark'} 
+                    size='sm'
+                    className="w-100 btn-sm"
+                    onClick={() => show.id !== undefined && toggleWatched(show.id, show.isWatched)}>
+                      {show.isWatched ? 'Watched' : 'Unwatched'}
+                  </Button>
+                </div>
+                <div className="col-6">
+                  <small className="fw-bold text-muted d-block mb-2">Actions</small>
+                  <Button 
+                    variant='danger' 
+                    size='sm'
+                    className="w-100 btn-sm"
+                    onClick={() => show.id !== undefined && deleteShow(show.id)}>
+                      Delete
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
 
-    {/* Table layout for larger screens (576px and up) */}
     <div className='table-responsive d-none d-sm-block'>
       <table className="table table-striped">
         <thead className="table-dark">
