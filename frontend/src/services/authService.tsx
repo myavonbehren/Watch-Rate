@@ -1,7 +1,6 @@
 import axios from 'axios'
 import type { UserClaims } from '../types/UserClaims';
 import { jwtDecode } from 'jwt-decode';
-import process from 'process';
 
 // Store a single instance of the authenticated API
 //let apiInstance: AxiosInstance | null = null;
@@ -32,6 +31,7 @@ export const isAuthenticated = () => {
 
 // Get a configured API instance with Basic Auth
 export const configureReviewApiWithBasicAuth = () => {
+  console.log('API URL:', process.env.REACT_APP_API_URL);
   const apiInstance = axios.create({
     // baseURL: 'http://localhost:5023',
     baseURL: process.env.REACT_APP_API_URL,
