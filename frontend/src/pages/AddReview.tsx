@@ -82,7 +82,8 @@ const AddReview = () => {
     //if (error) return <Alert key="warning" variant="warning"> Error: {error} </Alert>;
 
     return (
-    <Card className="p-0 shadow-sm border mx-auto" style={{ width: '95vw', maxWidth: '40rem'}}>
+        
+<Card className="p-0 shadow-sm border mx-auto" style={{ width: 'calc(95vw - 3rem)', maxWidth: '40rem' }}>
         <Card.Body>
         {error && (
                 <Alert 

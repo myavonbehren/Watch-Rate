@@ -81,7 +81,7 @@ const Watchlist: React.FC = () => {
                 <div className='flex-shrink-0'>
                     <AddShow addShow={createShow}/>
                 </div>
-                <div className="flex-grow-1" style={{ minWidth: '600px' }}>
+                <div className="flex-grow-1" style={{ minWidth: '0' }}>
                     <ShowList
                     shows={shows}
                     toggleWatched={updateWatched}
