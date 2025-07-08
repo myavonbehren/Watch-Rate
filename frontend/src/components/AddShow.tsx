@@ -18,7 +18,7 @@ const AddShow: React.FC<AddShowProps> = ({ addShow }) => {
     const [show, setShow] = useState<Show>({
         username: 'default user',
         title: '',
-        isWatched: false
+        isWatched: true
     });
 
     const handleWatchedToggle = (value: string) => {
@@ -91,7 +91,7 @@ const AddShow: React.FC<AddShowProps> = ({ addShow }) => {
                 ))}
             </ButtonGroup>
         </div>
-        
+
             <div className="d-grid gap-2">
             <Button 
             variant='dark' 
